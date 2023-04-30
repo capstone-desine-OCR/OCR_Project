@@ -31,8 +31,19 @@ response = requests.request("POST", api_url, headers=headers, data = payload, fi
 
 result = response.json()
 
-for field in result['images'][0]['fields']:
-    text = field['inferText']
-    vertices_list = field['boundingPoly']['vertices']
+result_list = []
+current_row = []
+#result_list에 정보 배열로 저장
+for image in result['images']:
+    for field in image['fields']:
+        if field['lineBreak']:
+            current_row.append(field['inferText'])
+            result_list.append(current_row)
+            current_row = []
+        else:
+            current_row.append(field['inferText'])
+result_list.append(current_row)
 
-    print(text)
+# 결과 출력
+for row in result_list:
+    print(row)
