@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CameraKt</string>
+    <string name="takePicture">카메라 촬영</string>
+    <string name="recognition">OCR 인식</string>
+</resources>
