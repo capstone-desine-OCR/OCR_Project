@@ -128,4 +128,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return result;
     }
+
+    public int updateOctTable(OCTTable octTable){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(OCTTable.COLUMN_WEIGHT, octTable.getWeight());
+        values.put(OCTTable.COLUMN_COUNT, octTable.getPrice());
+        values.put(OCTTable.COLUMN_PRICE, octTable.getPrice());
+        values.put(OCTTable.COLUMN_WON, octTable.getWon());
+        int result = db.update(OCTTable.TABLE_NAME, values, OCTTable.COLUMN_CODE + "= ?", new String[] {String.valueOf(octTable.getCode())});
+
+        db.close();
+
+        return result;
+    }
+
+    public void deleteOctTable(OCTTable octTable){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(OCTTable.TABLE_NAME, OCTTable.COLUMN_CODE + "= ?", new String[]{String.valueOf(octTable.getCode())});
+
+        db.close();
+    }
 }
