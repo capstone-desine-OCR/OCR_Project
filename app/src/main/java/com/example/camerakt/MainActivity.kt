@@ -49,13 +49,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
 
-    private lateinit var db : DatabaseHelper
+    //private lateinit var db : DatabaseHelper
     // 메인
     @RequiresApi(Build.VERSION_CODES.O) // 버전체크
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        db = DatabaseHelper(this)
+        //db = DatabaseHelper(this)
 
 
 //       <뷰 바인더로 변경>

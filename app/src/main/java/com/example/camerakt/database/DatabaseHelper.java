@@ -31,6 +31,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(OCTTable.CREATE_TABLE);
     }
 
+
+    //SQLiteOpenHelper Called when the database needs to be upgraded.
+    // The implementation should use this method to drop tables, add tables,
+    // or do anything else it needs to upgrade
+    // to the new schema version.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + OCTTable.TABLE_NAME);
@@ -61,14 +66,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    // id는 column_num, 즉 table의 원하는 행을 받아옴
     @SuppressLint("Range")
     public OCTTable getOne(long id){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(OCTTable.TABLE_NAME,
-                new String[]{OCTTable.COLUMN_NUM, OCTTable.COLUMN_CODE, OCTTable.COLUMN_ORIGIN, OCTTable.COLUMN_CULTIVAR, OCTTable.COLUMN_INDATE, OCTTable.COLUMN_OUTDATE, OCTTable.COLUMN_WEIGHT, OCTTable.COLUMN_COUNT, OCTTable.COLUMN_COUNT, OCTTable.COLUMN_PRICE, OCTTable.COLUMN_WON, OCTTable.COLUMN_EXTRA},
+        Cursor cursor = db.query(OCTTable.TABLE_NAME,// table
+                new String[]{OCTTable.COLUMN_NUM, OCTTable.COLUMN_CODE, OCTTable.COLUMN_ORIGIN, OCTTable.COLUMN_CULTIVAR,
+                        OCTTable.COLUMN_INDATE, OCTTable.COLUMN_OUTDATE, OCTTable.COLUMN_WEIGHT, OCTTable.COLUMN_COUNT,
+                        OCTTable.COLUMN_COUNT, OCTTable.COLUMN_PRICE, OCTTable.COLUMN_WON, OCTTable.COLUMN_EXTRA}, // columns
                 OCTTable.COLUMN_NUM + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
+        //selection – A filter declaring which rows to return, formatted as an SQL WHERE clause (excluding the WHERE itself).
+        // Passing null will return all rows for the given table.
 
         if(cursor != null){
             cursor.moveToFirst();

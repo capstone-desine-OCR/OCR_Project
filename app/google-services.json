@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "532419846791",
+    "project_id": "cameraocr-29137",
+    "storage_bucket": "cameraocr-29137.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532419846791:android:928b222da290fc3ff70e22",
+        "android_client_info": {
+          "package_name": "com.example.camerakt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "532419846791-tiganvpasncgfobfm7rjt091v7hr84mn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABkuU8aS9bGQSs1yfi2Cn0-DwVKZW9h-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "532419846791-tiganvpasncgfobfm7rjt091v7hr84mn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
