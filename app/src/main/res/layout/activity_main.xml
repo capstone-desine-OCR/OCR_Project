@@ -42,22 +42,14 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <ScrollView
-            android:layout_width="300dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="104dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.365"
-            app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="textview" />
-        </ScrollView>
+        <Button
+                android:id="@+id/btn_list"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:text="목록 입력"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="573dp" tools:layout_editor_absoluteX="27dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!--    app:srcCompat-->

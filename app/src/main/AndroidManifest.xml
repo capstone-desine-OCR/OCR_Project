@@ -34,6 +34,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".ListActivity"
+                android:exported="false">
+            <meta-data
+                    android:name="android.app.lib_name"
+                    android:value=""/>
+        </activity>
+
         <!--여기서 선언하는 것을 takeCapture의 photoFile?.also .. photoURI 의 authority 에서 사용 -->
         <!--  fileProvider 필요이유 :
                 (안드로이드) 파일 제공자 , 누가 사용하려고 하는지 명시해줘야 제대로 동작하도록 보안 강화 시켜놓은것을 완화시켜줄 수 있도록 함-->
