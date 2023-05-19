@@ -1,21 +1,24 @@
 package com.example.camerakt
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.graphics.drawable.toBitmap
 import com.example.camerakt.databinding.ActivityListBinding
 import com.example.camerakt.util.CameraUtil
+import com.example.camerakt.viewmodel.ListViewModel
+import com.example.myocr.util.MyEncoder
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 
@@ -25,15 +28,48 @@ class ListActivity : AppCompatActivity() {
     lateinit var curPhotoPath: String // 문자열 형태의 사진 경로 값
 
     private lateinit var binding: ActivityListBinding
+
+    private val myEncoder = MyEncoder()
+
+    var data: String? = null
+
+    // 뷰 모델
+    private val listViewModel: ListViewModel by viewModels()
+
+//        val listViewModel: ListViewModel = ViewModelProvider(this).get(ListViewModel::class.java) // 동일한 역할...?
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        listViewModel.listBitMapLiveData.observe(this) // this : listActivity
+        { bitmap -> binding.listImage.setImageBitmap(bitmap) }
+
         binding.btnCameraList.setOnClickListener {
             takeCapture()  // 기본 카메라 앱을 실행하여 사진 촬영
+        }
 
+        binding.btnOcrList.setOnClickListener {
+            onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영
+        }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun onClick(v: View) {
+//        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
+
+        when (v) {
+            binding.btnOcrList -> {
+                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
+                data =
+                    myEncoder.encodeImage(myEncoder.getBitmap(binding.listImage.drawable.toBitmap())) // bitmap 가져와서 -> base64로 변환
+                data?.let { listViewModel.setInferred(it, this) } // 클릭시 post 값 띄움
+
+            }
         }
     }
 
@@ -75,7 +111,9 @@ class ListActivity : AppCompatActivity() {
             val bitmap = ImageDecoder.decodeBitmap(decode)
 
             Log.d("CHECK3", "여기까지 전달이 되나?")
-            binding.listImage.setImageBitmap(bitmap)
+//            binding.listImage.setImageBitmap(bitmap)
+            listViewModel.listBitMapLiveData.value = bitmap  // 이미지 뷰에 bitmap을 저장후 -> observer로 재 갱신???
+
             Log.d("CHECK4", "여기까지 전달이 되나?")
             CameraUtil.savePhoto(this, bitmap)
         }

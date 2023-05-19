@@ -38,11 +38,11 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
                 android:text="@string/takePicture"
-                app:layout_constraintEnd_toStartOf="@+id/button_ocr_one"
+                app:layout_constraintEnd_toStartOf="@+id/btn_ocr_one"
         />
 
         <Button
-                android:id="@+id/button_ocr_one"
+                android:id="@+id/btn_ocr_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

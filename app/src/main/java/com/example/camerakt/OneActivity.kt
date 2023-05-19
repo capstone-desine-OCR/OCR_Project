@@ -1,24 +1,25 @@
 package com.example.camerakt
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.graphics.drawable.toBitmap
 import com.example.camerakt.databinding.ActivityOneBinding
 import com.example.camerakt.util.CameraUtil
-
+import com.example.camerakt.viewmodel.OneViewModel
+import com.example.myocr.util.MyEncoder
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 
 
 class OneActivity : AppCompatActivity() {
@@ -27,15 +28,45 @@ class OneActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOneBinding
 
+    private val myEncoder = MyEncoder()
+
+
+    var data: String? = null
+
+    // 뷰 모델
+    private val oneViewModel: OneViewModel by viewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityOneBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        oneViewModel.oneBitMapLiveData.observe(this) // this : oneActivity
+        { bitmap -> binding.oneImage.setImageBitmap(bitmap) }
+
         binding.btnCameraOne.setOnClickListener {
             takeCapture()  // 기본 카메라 앱을 실행하여 사진 촬영
-            //viewModel.setInferred(it)
+        }
+
+        binding.btnOcrOne.setOnClickListener {
+            onClick(it)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun onClick(v: View) {
+//        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
+
+        when (v) {
+            binding.btnOcrOne -> {
+                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
+                data =
+                    myEncoder.encodeImage(myEncoder.getBitmap(binding.oneImage.drawable.toBitmap())) // bitmap 가져와서 -> base64로 변환
+                data?.let { oneViewModel.setInferred(it, this) } // 클릭시 post 값 띄움
+
+            }
         }
     }
 
@@ -77,7 +108,8 @@ class OneActivity : AppCompatActivity() {
             val bitmap = ImageDecoder.decodeBitmap(decode)
 
             Log.d("CHECK3", "여기까지 전달이 되나?")
-            binding.oneImage.setImageBitmap(bitmap)
+//            binding.oneImage.setImageBitmap(bitmap)
+            oneViewModel.oneBitMapLiveData.value = bitmap
             Log.d("CHECK4", "여기까지 전달이 되나?")
             CameraUtil.savePhoto(this, bitmap)
         }
