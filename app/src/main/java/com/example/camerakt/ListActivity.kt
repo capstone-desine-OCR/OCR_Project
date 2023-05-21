@@ -34,9 +34,9 @@ class ListActivity : AppCompatActivity() {
     var data: String? = null
 
     // 뷰 모델
+    // val listViewModel: ListViewModel = ViewModelProvider(this).get(ListViewModel::class.java) // 동일한 역할...?
     private val listViewModel: ListViewModel by viewModels()
 
-//        val listViewModel: ListViewModel = ViewModelProvider(this).get(ListViewModel::class.java) // 동일한 역할...?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +44,11 @@ class ListActivity : AppCompatActivity() {
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //onActivityResult 의 결과 listBitMapLiveData 변경 감지 -> 화면에 나타나도록 함 = 데이터 유지
         listViewModel.listBitMapLiveData.observe(this) // this : listActivity
         { bitmap -> binding.listImage.setImageBitmap(bitmap) }
 
-        listViewModel.listTableData.observe(this) {
-
-        }
-
+        
         binding.btnCameraList.setOnClickListener {
 
             // list_Activity 의 frameLay 의 fragment 위치를 찾는 것
@@ -62,10 +60,8 @@ class ListActivity : AppCompatActivity() {
                     .commit()
                 Log.d("btnCamera", "기존 fragment 삭제  ")
             }
-
             takeCapture()  // 기본 카메라 앱을 실행하여 사진 촬영
         }
-
         binding.btnOcrList.setOnClickListener {
 
             //fragment 생성
@@ -76,7 +72,7 @@ class ListActivity : AppCompatActivity() {
             transaction.replace(R.id.fragment_container, fragment)
             transaction.commit()
 
-//            onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영
+            onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영
 
         }
     }
@@ -120,6 +116,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
+    // 사진을 찍은 결과값을 listViewModel 의 listBitMapLiveData 의 변화감지 data로 설정
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.d("CHECK1", "여기까지 전달이 되나?")
         super.onActivityResult(requestCode, resultCode, data)
