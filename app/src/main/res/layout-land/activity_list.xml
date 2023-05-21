@@ -7,15 +7,22 @@
               android:orientation="horizontal"
               tools:context=".ListActivity">
 
-    <ImageView
-            android:id="@+id/list_image"
+    <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:maxHeight="200dp"
-            android:maxWidth="200dp"
-            tools:srcCompat="@tools:sample/avatars"/>
+            android:layout_weight="1">
+
+        <ImageView
+                android:id="@+id/list_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:maxHeight="200dp"
+                android:maxWidth="200dp"
+                tools:srcCompat="@tools:sample/avatars"/>
+
+    </FrameLayout>
 
     <LinearLayout
             android:layout_width="0dp"

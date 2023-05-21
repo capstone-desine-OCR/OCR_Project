@@ -12,6 +12,10 @@ import com.example.camerakt.databinding.FragmentListOcrBinding
 import com.example.camerakt.viewmodel.ListViewModel
 
 class ListOcrFragment : Fragment() {
+
+    // activityViewModel : activity 에서 생성된 특정 viewModel(ListViewModel) 을 공유할 수 있다 = fragment viewModel의 생명주기는 activity에 종속되어있음
+    // viewModel liveData의 변경사항을 activity에서도 observe 할수 있고 , fragment에서도 observe 할 수 있다.
+    // activity를 거치는 방법보단 바로 fragment로 보내는 방법을 택했기 때문에 동일한 viewModel을 공유하는 것으로 
     private val listViewModel: ListViewModel by activityViewModels()
 
     //fragment viewBinding 하는방법..?
@@ -20,7 +24,8 @@ class ListOcrFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // activity->fragment bundle로 가져오는 데이터 fragments 내의 arguments 로 가져옴
+        // activity->fragment bundle로 가져오는 데이터 fragments 내의 arguments 로 가져옴 -> bundle - arguments 는 대량의 데이터 가져오지못함
+        // -> viewModel로 데이터 전달하는 것으로 교체
         arguments?.let {
 
         }
@@ -59,7 +64,11 @@ class ListOcrFragment : Fragment() {
 //            listOf("5", "e", "Seoule", "e", "2023-05-01", "2023-05-30e", "ekg", "10", "10000", "100000", "None"),
 //        )
 
+        // 선형 배치
+        //requireContext() : Activity -> fragment 로 주는 context
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // data -> : observe에 의해  ArrayList<ArrayList<String>>의 변경이 감지되었을때 -> 이후 실행 ( data를 adapter로 넘긴다)   
         listViewModel.listTableData.observe(viewLifecycleOwner) { data ->
             val adapter = TableAdapter(data)
             binding.recyclerView.adapter = adapter
