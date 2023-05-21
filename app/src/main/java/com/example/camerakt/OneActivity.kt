@@ -30,12 +30,10 @@ class OneActivity : AppCompatActivity() {
 
     private val myEncoder = MyEncoder()
 
-
     var data: String? = null
 
     // 뷰 모델
     private val oneViewModel: OneViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +59,7 @@ class OneActivity : AppCompatActivity() {
 
         when (v) {
             binding.btnOcrOne -> {
-                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "One - clicked", Toast.LENGTH_SHORT).show()
                 data =
                     myEncoder.encodeImage(myEncoder.getBitmap(binding.oneImage.drawable.toBitmap())) // bitmap 가져와서 -> base64로 변환
                 data?.let { oneViewModel.setInferred(it, this) } // 클릭시 post 값 띄움

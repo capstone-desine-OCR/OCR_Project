@@ -1,21 +1,12 @@
 package com.example.camerakt
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.icu.text.SimpleDateFormat
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.camerakt.databinding.ActivityMainBinding
@@ -23,10 +14,6 @@ import com.example.myocr.util.MyEncoder
 import com.example.myocr.viewmodel.MyViewModel
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.util.Date
 
 class MainActivity : AppCompatActivity() {
 //    var : 변동 가능
