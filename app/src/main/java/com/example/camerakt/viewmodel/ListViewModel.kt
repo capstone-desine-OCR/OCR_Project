@@ -13,8 +13,14 @@ class ListViewModel : ViewModel() {
     // 원래 private - getter로 전달해야하지만 ...
     val listBitMapLiveData: MutableLiveData<Bitmap> = MutableLiveData()
 
+
+    // fragment
     val listTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
-    val listLiveData: LiveData<ArrayList<ArrayList<String>>> get() = listTableData
+    val listTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = listTableData
+
+    // dialog 수정
+    val editRowData = MutableLiveData<MutableList<String>>()
+    val editRowLiveData: LiveData<MutableList<String>> get() = editRowData
 
     fun setInferred(data: String, context: Context) {
         repository.getResult(data) // 데이터를 가져오고

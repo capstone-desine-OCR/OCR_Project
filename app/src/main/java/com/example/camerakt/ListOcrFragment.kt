@@ -43,36 +43,41 @@ class ListOcrFragment : Fragment() {
     // View의 초기값 설정 , LiveData 옵저빙 ,RecyclerView , Adapter 세팅은 이 메소드에서 해주는 것
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val data = listOf(
-//            listOf(
-//                "번호",
-//                "코드",
-//                "원산지",
-//                "품종",
-//                "수입 날짜",
-//                "반입 날짜",
-//                "중량",
-//                "수량",
-//                "단가",
-//                "총액",
-//                "비고"
-//            ),
-//            listOf("1", "A", "Seoula", "a", "2023-05-01", "2023-05-30a", "akg", "10", "10000", "100000", "None"),
-//            listOf("2", "b", "Seoulb", "b", "2023-05-01", "2023-05-30b", "bkg", "10", "10000", "100000", "None"),
-//            listOf("3", "c", "Seoulc", "c", "2023-05-01", "2023-05-30c", "ckg", "10", "10000", "100000", "None"),
-//            listOf("4", "d", "Seould", "d", "2023-05-01", "2023-05-30d", "dkg", "10", "10000", "100000", "None"),
-//            listOf("5", "e", "Seoule", "e", "2023-05-01", "2023-05-30e", "ekg", "10", "10000", "100000", "None"),
-//        )
+        val data = listOf(
+            mutableListOf(
+                "번호",
+                "코드",
+                "원산지",
+                "품종",
+                "수입 날짜",
+                "반입 날짜",
+                "중량",
+                "수량",
+                "단가",
+                "총액",
+                "비고"
+            ),
+            mutableListOf("1", "A", "Seoula", "a", "2023-05-01", "2023-05-30a", "akg", "10", "10000", "100000", "None"),
+            mutableListOf("2", "b", "Seoulb", "b", "2023-05-01", "2023-05-30b", "bkg", "10", "10000", "100000", "None"),
+            mutableListOf("3", "c", "Seoulc", "c", "2023-05-01", "2023-05-30c", "ckg", "10", "10000", "100000", "None"),
+            mutableListOf("4", "d", "Seould", "d", "2023-05-01", "2023-05-30d", "dkg", "10", "10000", "100000", "None"),
+            mutableListOf("5", "e", "Seoule", "e", "2023-05-01", "2023-05-30e", "ekg", "10", "10000", "100000", "None"),
+        )
 //        val adapter = TableAdapter(data)
-//        binding.recyclerView.adapter = adapter
-//        // 선형 배치
-//        //requireContext() : Activity -> fragment 로 주는 context
+        val adapter = TableAdapter(data, listViewModel) // 생성자로써 전달
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-//        // data -> : observe에 의해  ArrayList<ArrayList<String>>의 변경이 감지되었을때 -> 이후 실행 ( data를 adapter로 넘긴다)
+
+//      observe
+        //requireContext() : Activity -> fragment 로 주는 context
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext()) // 선형 배치
+
+        // data -> : observe에 의해  ArrayList<ArrayList<String>>의 변경이 감지되었을때 -> 이후 실행 ( data를 adapter로 넘긴다)
         listViewModel.listTableData.observe(viewLifecycleOwner) { data ->
-            val adapter = TableAdapter(data)
-            binding.recyclerView.adapter = adapter
+//            val adapter = TableAdapter(data)
+            val adapter = TableAdapter(data, listViewModel)
+            binding.recyclerView.adapter = adapter // recyclerView 로 adapter 를 붙여주는 것 -> ViewHolder를 붙여주는 것
         }
         val itemDecoration = CustomItemDecoration(30)
         binding.recyclerView.addItemDecoration(itemDecoration)
