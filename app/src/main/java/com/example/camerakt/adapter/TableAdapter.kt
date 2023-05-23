@@ -24,12 +24,14 @@ class TableAdapter(private val data: List<MutableList<String>>, private val list
         holder.bind(row)
 
         holder.itemView.setOnClickListener {
+            Log.d("click", "${row.toString()} ")
             Log.d("click", "$position 입니다")
 
-            val dialog = ListDialog(holder.itemView.context)
+            val dialog = ListDialog(row)
+            Log.d("click", "$dialog 입니다")
             dialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "list_dialog")
 
-            listViewModel.editRowData.value = row
+//            listViewModel.editRowData.value = row
         } // 선택한 열을
     }
 
