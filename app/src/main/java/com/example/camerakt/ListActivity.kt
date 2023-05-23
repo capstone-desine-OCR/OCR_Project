@@ -66,6 +66,7 @@ class ListActivity : AppCompatActivity() {
 
         binding.btnOcrList.setOnClickListener {
             if (binding.listImage.drawable != null) {
+
                 //fragment 생성 해서 activity 위에 붙여놓음
                 val fragment = ListOcrFragment()
                 // fragment 해주는 역할
