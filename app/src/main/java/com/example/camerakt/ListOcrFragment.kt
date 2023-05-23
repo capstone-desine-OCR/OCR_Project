@@ -43,30 +43,30 @@ class ListOcrFragment : Fragment() {
     // View의 초기값 설정 , LiveData 옵저빙 ,RecyclerView , Adapter 세팅은 이 메소드에서 해주는 것
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val data = listOf(
-            mutableListOf(
-                "번호",
-                "코드",
-                "원산지",
-                "품종",
-                "수입 날짜",
-                "반입 날짜",
-                "중량",
-                "수량",
-                "단가",
-                "총액",
-                "비고"
-            ),
-            mutableListOf("1", "A", "Seoula", "a", "2023-05-01", "2023-05-30a", "akg", "10", "10000", "100000", "None"),
-            mutableListOf("2", "b", "Seoulb", "b", "2023-05-01", "2023-05-30b", "bkg", "10", "10000", "100000", "None"),
-            mutableListOf("3", "c", "Seoulc", "c", "2023-05-01", "2023-05-30c", "ckg", "10", "10000", "100000", "None"),
-            mutableListOf("4", "d", "Seould", "d", "2023-05-01", "2023-05-30d", "dkg", "10", "10000", "100000", "None"),
-            mutableListOf("5", "e", "Seoule", "e", "2023-05-01", "2023-05-30e", "ekg", "10", "10000", "100000", "None"),
-        )
-//        val adapter = TableAdapter(data)
-        val adapter = TableAdapter(data, listViewModel) // 생성자로써 전달
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//        val data = listOf(
+//            mutableListOf(
+//                "번호",
+//                "코드",
+//                "원산지",
+//                "품종",
+//                "수입 날짜",
+//                "반입 날짜",
+//                "중량",
+//                "수량",
+//                "단가",
+//                "총액",
+//                "비고"
+//            ),
+//            mutableListOf("1", "A", "Seoula", "a", "2023-05-01", "2023-05-30a", "akg", "10", "10000", "100000", "None"),
+//            mutableListOf("2", "b", "Seoulb", "b", "2023-05-01", "2023-05-30b", "bkg", "10", "10000", "100000", "None"),
+//            mutableListOf("3", "c", "Seoulc", "c", "2023-05-01", "2023-05-30c", "ckg", "10", "10000", "100000", "None"),
+//            mutableListOf("4", "d", "Seould", "d", "2023-05-01", "2023-05-30d", "dkg", "10", "10000", "100000", "None"),
+//            mutableListOf("5", "e", "Seoule", "e", "2023-05-01", "2023-05-30e", "ekg", "10", "10000", "100000", "None"),
+//        )
+////        val adapter = TableAdapter(data)
+//        val adapter = TableAdapter(data, listViewModel) // 생성자로써 전달
+//        binding.recyclerView.adapter = adapter
+//        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
 
 //      observe

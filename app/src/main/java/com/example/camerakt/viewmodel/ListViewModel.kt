@@ -16,10 +16,12 @@ class ListViewModel : ViewModel() {
 
     // fragment
     val listTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
+
     val listTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = listTableData
 
     // dialog 수정
     val editRowData = MutableLiveData<MutableList<String>>()
+
     val editRowLiveData: LiveData<MutableList<String>> get() = editRowData
 
     fun setInferred(data: String, context: Context) {
