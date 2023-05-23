@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd63a7b0-f1da-476d-99c7-2fd1c151374b" name="Changes" comment="23_05_21 ocr 결과 listOcrFragment에 뜨고 회전 가능" />
+    <list default="true" id="bd63a7b0-f1da-476d-99c7-2fd1c151374b" name="Changes" comment="23_05_23 예시 dialog editView 에 viewHolder position data 초기화 이후 잠시 저장2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,9 +47,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile_vertical" />
-        <option value="layoutResourceFile" />
-        <option value="Kotlin Class" />
         <option value="resourceFile" />
+        <option value="layoutResourceFile" />
+        <option value="Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -210,7 +211,28 @@
       <option name="project" value="LOCAL" />
       <updated>1684680446234</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="23_05_23 ui_2_1 흰색바탕 merge">
+      <created>1684823290803</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1684823290803</updated>
+    </task>
+    <task id="LOCAL-00008" summary="23_05_23 예시 recyclerView-viewHolder 에 dialog 띄우기">
+      <created>1684839523376</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1684839523377</updated>
+    </task>
+    <task id="LOCAL-00009" summary="23_05_23 예시 dialog editView 에 viewHolder position data 초기화 이후 잠시 저장2">
+      <created>1684846082329</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1684846082329</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,7 +264,10 @@
     <MESSAGE value="23_05_21 임시 데이터 목록 fragment 위에 생성" />
     <MESSAGE value="23_05_21 ocr 결과 listOcrFragment에 뜨게됨." />
     <MESSAGE value="23_05_23 -&gt; MutableList issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="23_05_23 -&gt; MutableList issue" />
+    <MESSAGE value="23_05_23 ui_2_1 흰색바탕 merge" />
+    <MESSAGE value="23_05_23 예시 recyclerView-viewHolder 에 dialog 띄우기" />
+    <MESSAGE value="23_05_23 예시 dialog editView 에 viewHolder position data 초기화 이후 잠시 저장2" />
+    <option name="LAST_COMMIT_MESSAGE" value="23_05_23 예시 dialog editView 에 viewHolder position data 초기화 이후 잠시 저장2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

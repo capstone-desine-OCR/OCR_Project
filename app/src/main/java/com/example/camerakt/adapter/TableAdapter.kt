@@ -1,11 +1,16 @@
 package com.example.camerakt.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.camerakt.ListDialog
 import com.example.camerakt.databinding.RowItemBinding
+import com.example.camerakt.viewmodel.ListViewModel
 
-class TableAdapter(private val data: List<List<String>>) : RecyclerView.Adapter<TableAdapter.ViewHolder>() {
+class TableAdapter(private val data: List<MutableList<String>>, private val listViewModel: ListViewModel) :
+    RecyclerView.Adapter<TableAdapter.ViewHolder>() {
 
     //findByView 지양  binding으로 초기화
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableAdapter.ViewHolder {
@@ -17,6 +22,17 @@ class TableAdapter(private val data: List<List<String>>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: TableAdapter.ViewHolder, position: Int) {
         val row = data[position]
         holder.bind(row)
+
+        holder.itemView.setOnClickListener {
+            Log.d("click", "${row.toString()} ")
+            Log.d("click", "$position 입니다")
+
+            val dialog = ListDialog(row)
+            Log.d("click", "$dialog 입니다")
+            dialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "list_dialog")
+
+//            listViewModel.editRowData.value = row
+        } // 선택한 열을
     }
 
     //<List<String> 총 개수
