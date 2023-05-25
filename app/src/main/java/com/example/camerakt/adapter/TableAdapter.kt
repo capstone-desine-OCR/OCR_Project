@@ -24,11 +24,11 @@ class TableAdapter(internal val data: ArrayList<ArrayList<String>>, private val 
         holder.bind(row)
 
         holder.itemView.setOnClickListener {
-            Log.d("click", "${row.toString()} ")
+            Log.d("click", "$row ")
             Log.d("click", "$position 입니다")
 
-//            val dialog = ListDialog(row)
-            val dialog = ListDialog(row, listViewModel)
+//            val dialog = ListDialog(row) , position을 생성자로 전달해서 dialog를 거쳐 fragment로 전달
+            val dialog = ListDialog(row, position, listViewModel)
             Log.d("click", "$dialog 입니다")
             dialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "list_dialog")
 

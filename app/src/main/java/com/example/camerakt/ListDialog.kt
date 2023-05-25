@@ -10,7 +10,11 @@ import androidx.fragment.app.DialogFragment
 import com.example.camerakt.databinding.ListDialogBinding
 import com.example.camerakt.viewmodel.ListViewModel
 
-class ListDialog(private val row: ArrayList<String>, private val listViewModel: ListViewModel) : DialogFragment() {
+class ListDialog(
+    private val row: ArrayList<String>,
+    private val position: Int,
+    private val listViewModel: ListViewModel
+) : DialogFragment() {
     private lateinit var binding: ListDialogBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -30,7 +34,7 @@ class ListDialog(private val row: ArrayList<String>, private val listViewModel: 
         val builder = AlertDialog.Builder(context)
             .setTitle("목록 수정")
             .setView(binding.root)
-            .setPositiveButton("수정", DialogInterface.OnClickListener { dialog, id ->
+            .setPositiveButton("수정", DialogInterface.OnClickListener { dialog, _ ->
                 Log.d("수정 버튼1", "수정 버튼 눌렀다?")
                 val modifiedRow = ArrayList<String>().apply {
 
@@ -48,7 +52,7 @@ class ListDialog(private val row: ArrayList<String>, private val listViewModel: 
                 }
                 Log.d("수정 버튼2", "수정 버튼 눌렀다?")
                 // 변경한 list
-                listViewModel.editRowData.value = modifiedRow
+                listViewModel.editRowData.value = Pair(modifiedRow, position)
 //                Log.d("수정 버튼3", "수정 버튼 눌렀다?")
             })
             .setNegativeButton("취소", null)

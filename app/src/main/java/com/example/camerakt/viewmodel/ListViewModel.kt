@@ -22,9 +22,10 @@ class ListViewModel : ViewModel() {
     // dialog 수정
 //    val editRowData = MutableLiveData<MutableList<String>>()
 //    val editRowLiveData: LiveData<MutableList<String>> get() = editRowData
-    val editRowData = MutableLiveData<ArrayList<String>>()
 
-    val editRowLiveData: LiveData<ArrayList<String>> get() = editRowData
+    // 위치와 arrayList를 함께 묶어서 보낼 수 있나보다
+    val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
+
 
     fun setInferred(data: String, context: Context) {
         repository.getResult(data) // 데이터를 가져오고
