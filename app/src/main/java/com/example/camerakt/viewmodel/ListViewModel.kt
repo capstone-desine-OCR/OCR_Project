@@ -20,9 +20,11 @@ class ListViewModel : ViewModel() {
     val listTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = listTableData
 
     // dialog 수정
-    val editRowData = MutableLiveData<MutableList<String>>()
+//    val editRowData = MutableLiveData<MutableList<String>>()
+//    val editRowLiveData: LiveData<MutableList<String>> get() = editRowData
+    val editRowData = MutableLiveData<ArrayList<String>>()
 
-    val editRowLiveData: LiveData<MutableList<String>> get() = editRowData
+    val editRowLiveData: LiveData<ArrayList<String>> get() = editRowData
 
     fun setInferred(data: String, context: Context) {
         repository.getResult(data) // 데이터를 가져오고

@@ -8,8 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.example.camerakt.databinding.ListDialogBinding
+import com.example.camerakt.viewmodel.ListViewModel
 
-class ListDialog(private val row: MutableList<String>) : DialogFragment() {
+class ListDialog(private val row: ArrayList<String>, private val listViewModel: ListViewModel) : DialogFragment() {
     private lateinit var binding: ListDialogBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -30,7 +31,25 @@ class ListDialog(private val row: MutableList<String>) : DialogFragment() {
             .setTitle("목록 수정")
             .setView(binding.root)
             .setPositiveButton("수정", DialogInterface.OnClickListener { dialog, id ->
-                Log.d("click", "수정 버튼 눌렀다?")
+                Log.d("수정 버튼1", "수정 버튼 눌렀다?")
+                val modifiedRow = ArrayList<String>().apply {
+
+                    add(row[0])
+                    add(binding.editCode.text.toString())
+                    add(binding.editOrigin.text.toString())
+                    add(binding.editCultivar.text.toString())
+                    add(binding.editIndate.text.toString())
+                    add(binding.editOutdate.text.toString())
+                    add(binding.editWeight.text.toString())
+                    add(binding.editCount.text.toString())
+                    add(binding.editPrice.text.toString())
+                    add(binding.editWon.text.toString())
+                    add(binding.editExtra.text.toString())
+                }
+                Log.d("수정 버튼2", "수정 버튼 눌렀다?")
+                // 변경한 list
+                listViewModel.editRowData.value = modifiedRow
+//                Log.d("수정 버튼3", "수정 버튼 눌렀다?")
             })
             .setNegativeButton("취소", null)
         return builder.create()

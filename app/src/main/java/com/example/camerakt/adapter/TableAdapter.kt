@@ -9,7 +9,7 @@ import com.example.camerakt.ListDialog
 import com.example.camerakt.databinding.RowItemBinding
 import com.example.camerakt.viewmodel.ListViewModel
 
-class TableAdapter(private val data: List<MutableList<String>>, private val listViewModel: ListViewModel) :
+class TableAdapter(internal val data: ArrayList<ArrayList<String>>, private val listViewModel: ListViewModel) :
     RecyclerView.Adapter<TableAdapter.ViewHolder>() {
 
     //findByView 지양  binding으로 초기화
@@ -27,7 +27,8 @@ class TableAdapter(private val data: List<MutableList<String>>, private val list
             Log.d("click", "${row.toString()} ")
             Log.d("click", "$position 입니다")
 
-            val dialog = ListDialog(row)
+//            val dialog = ListDialog(row)
+            val dialog = ListDialog(row, listViewModel)
             Log.d("click", "$dialog 입니다")
             dialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "list_dialog")
 
@@ -43,7 +44,7 @@ class TableAdapter(private val data: List<MutableList<String>>, private val list
     // viewHolder라는 템플릿을 처음에 생성하고 data.size 개수 만큼 반복해서 재활용 -> 방향에따라서 재사용해서 붙인다는 느낌
     inner class ViewHolder(private val binding: RowItemBinding) : RecyclerView.ViewHolder(binding.root) {
         //        private val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
-        fun bind(row: List<String>) {
+        fun bind(row: ArrayList<String>) {
             // 독립적으로 작동 ?
             binding.listNumber.text = row[0]
             binding.listCode.text = row[1]
