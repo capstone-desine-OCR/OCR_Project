@@ -4,11 +4,9 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.camerakt.database.DatabaseHelper
-import com.example.camerakt.database.model.OCTTable
+import com.example.camerakt.database.model.OCRTable
+import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.repository.RepositoryImpl
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MyViewModel : ViewModel() {
@@ -21,13 +19,16 @@ class MyViewModel : ViewModel() {
     //repository
     var repository = RepositoryImpl
 
-    lateinit var db: DatabaseHelper
+    private val ocrTableService: OCRTableService = OCRTableService()
+
     fun setInferred(data: String, context: Context) {
         val result = StringBuilder()
-//        db = DatabaseHelper(context)
+        val ocrTable = OCRTable()
         repository.getResult(data) // 데이터를 가져오고
         // onReturn 콜백함수를 정의(onReturn: 결과 값이 도착했을 때 호출)
         // 결과 값을 처리하는 역할
+
+
 //        repository.onReturn = {
         repository.lineReturn = {
             for (field in it) {
@@ -38,69 +39,20 @@ class MyViewModel : ViewModel() {
             }
             Log.d("repository.lineReturn", "check collBack")
 
-
-            //파이어스토어 객체 얻어오기
-            var fireDB: FirebaseFirestore = FirebaseFirestore.getInstance()
-
-            // 'products' 이름의 컬렉션 생성
-            val productsCollection = fireDB.collection("products")
-
-            // 문서 배열 - 존재하는 product 수만큼 생성
-            val productDocRef = Array<DocumentReference>(it.size) { index ->
-                productsCollection.document("product" + index)
-            }
+            //dbHelper.addProduct : .add메소드 사용-> 자동으로 문서와 그에 해당하는 식별자를 생성하여 데이터를 추가해줌
 
             for (index in it.indices) {
-                val currentItem = it[index]
-
-                try {
-                    Integer.valueOf(currentItem.first())
-                } catch (e: NumberFormatException) {
-                    continue
+                if (index == 0) {
+                    Log.d("pass", ".") //index 0 : [번호, 코드 , 원산지, 품종, 수입날짜 ,...,비고]
+                } else {
+                    val currentItem = it[index]
+                    ocrTable.fromList(currentItem)
+                    ocrTableService.addProduct(ocrTable)
                 }
-
-                productDocRef[index].set(object : HashMap<String?, Any?>() {
-                    init {
-                        put("번호", currentItem[0])
-                        put("코드", currentItem[1])
-                        put("원산지", currentItem[2])
-                        put("품종", currentItem[3])
-                        put("수입날짜", currentItem[4])
-                        put("반입날짜", currentItem[5])
-                        put("중량", currentItem[6])
-                        put("수량", currentItem[7])
-                        put("단가", currentItem[8])
-                        put("금액", currentItem[9])
-                        //put("비고", currentItem[10])
-                        if(currentItem.size==11){
-                                put("비고", currentItem[10])}
-                        else{
-                                put("비고", null)
-                            }
-                    }
-                })
-
             }
-
-
-            /*
-                db.insertOCTTable(innerList)
-
-                var r_list : List<OCTTable> = db.allTables
-
-                for(inneerString in r_list){
-                    var current = inneerString.toString()
-                    Log.d("current", " current : $current" )
-                }
-
-                //for (innerString in innerList){
-                 //   Log.d("innerString ", "innerString : $innerString")
-                //}
-
-                Log.d("innerList End ", "  ")
-            }*/
-
-
+            Log.d("products", ocrTableService.getAllProducts().toString())
+            Log.d("개별 조회", ".")
+            //Log.d("product",ocrTableService.getProduct("2cSHQlwD1QdaoRIUrIsO").toString())
             liveData_String.postValue(result)
 
         }
