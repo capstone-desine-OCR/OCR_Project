@@ -15,6 +15,7 @@
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
 
     <TextView
@@ -22,6 +23,7 @@
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
 
     <TextView
@@ -29,54 +31,63 @@
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <TextView
             android:id="@+id/list_cultivar"
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <TextView
             android:id="@+id/list_indate"
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <TextView
             android:id="@+id/list_outdate"
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <TextView
             android:id="@+id/list_weight"
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <TextView
             android:id="@+id/list_count"
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <TextView
             android:id="@+id/list_price"
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <TextView
             android:id="@+id/list_won"
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <TextView
             android:id="@+id/list_extra"
             android:layout_width="100dp"
             android:layout_height="25dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_weight="0"/>
     <!-- Add the remaining TextViews in a similar manner -->
 
