@@ -59,6 +59,8 @@ class ListOcrFragment : Fragment() {
 //        binding.recyclerView.adapter = adapter
 //        binding.recyclerView.layoutManager =
 //            LinearLayoutManager(requireContext()) // context , requiredContext() 동일 -> null 포함여부
+//        listViewModel.listTableData.value = adapter.data
+//          Test 용 data 종료
 
 
         // adapter 초기 init -> adapter는 ArrayList<>() 한줄임
@@ -74,6 +76,10 @@ class ListOcrFragment : Fragment() {
             binding.recyclerView.adapter = adapter // recyclerView 로 adapter 를 붙여주는 것 -> ViewHolder를 붙여주는 것
         }
 
+        listViewModel.listTableData.value = adapter.data
+        Log.d("viewModel-table1 ", "초기화? : ${listViewModel.listTableData.value} ")
+
+
         // 목록 수정 adapter -> dialog -> fragment
         listViewModel.editRowData.observe(viewLifecycleOwner) { pair ->
             val modifiedRow = pair.first
@@ -82,11 +88,30 @@ class ListOcrFragment : Fragment() {
             Log.d("modifiedRow position확인", "position : $position 입니다")
             adapter.data[position] = modifiedRow
             adapter.notifyItemChanged(position)
+            listViewModel.listTableData.value = adapter.data
+            Log.d("viewModel-table-edit ", "변경시점 : ${listViewModel.listTableData.value} ")
         }
 
         // recyclerView 에 line_devider 이용해 줄 그리는 deco
         val itemDecoration = CustomItemDecoration(30)
         binding.recyclerView.addItemDecoration(itemDecoration)
+
+        binding.btnSave.setOnClickListener {
+            Log.d("btnSave", "ocr 결과 화면 종료")
+            Log.d("viewModel-table2 ", "종료 시점 : ${listViewModel.listTableData.value} ")
+            Log.d("viewModel-edit ", "최근에 변한 위치 : ${listViewModel.editRowData.value} ")
+
+            // fragment - 종속된 activity 같이 종료 -> mainActivity로?
+            requireActivity().finish()
+
+            // 현재 fragment 창만 꺼지는듯 -> listActivity로
+//            activity?.supportFragmentManager
+//                ?.beginTransaction()
+//                ?.remove(this)
+//                ?.commit()
+
+        }
+
     }
 
 
