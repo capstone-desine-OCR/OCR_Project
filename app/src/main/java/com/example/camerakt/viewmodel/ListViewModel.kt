@@ -18,12 +18,8 @@ class ListViewModel : ViewModel() {
     val listTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
 
     val listTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = listTableData
-
-    // dialog 수정
-//    val editRowData = MutableLiveData<MutableList<String>>()
-//    val editRowLiveData: LiveData<MutableList<String>> get() = editRowData
-
-    // 위치와 arrayList를 함께 묶어서 보낼 수 있나보다
+    
+    // 2가지 값을 한번에 묶어서 전달할 수 있음
     val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
 
 

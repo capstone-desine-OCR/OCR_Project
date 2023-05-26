@@ -65,21 +65,21 @@ class ListActivity : AppCompatActivity() {
         }
 
         binding.btnOcrList.setOnClickListener {
-//            if (binding.listImage.drawable != null) {
+            if (binding.listImage.drawable != null) {
 
-            //fragment 생성 해서 activity 위에 붙여놓음
-            val fragment = ListOcrFragment()
-            // fragment 해주는 역할
-            val transaction = supportFragmentManager.beginTransaction()
-            //listActivity
-            transaction.replace(R.id.fragment_container, fragment)
-            transaction.commit()
+                //fragment 생성 해서 activity 위에 붙여놓음
+                val fragment = ListOcrFragment()
+                // fragment 해주는 역할
+                val transaction = supportFragmentManager.beginTransaction()
+                //listActivity
+                transaction.replace(R.id.fragment_container, fragment)
+                transaction.commit()
 
-//            onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영
-//            } else {
-            Toast.makeText(this, "listImage가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
-            Log.d("empty Image", "이미지 존재하지 않음")
-//            }
+                onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영
+            } else {
+                Toast.makeText(this, "listImage가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("empty Image", "이미지 존재하지 않음")
+            }
         }
     }
 
