@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.camerakt.adapter.CustomItemDecoration
 import com.example.camerakt.adapter.TableAdapter
+import com.example.camerakt.database.model.OCRTable
+import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.databinding.FragmentListOcrBinding
 import com.example.camerakt.viewmodel.ListViewModel
 
@@ -19,6 +21,9 @@ class ListOcrFragment : Fragment() {
     // viewModel liveData의 변경사항을 activity에서도 observe 할수 있고 , fragment에서도 observe 할 수 있다.
     // activity를 거치는 방법보단 바로 fragment로 보내는 방법을 택했기 때문에 동일한 viewModel을 공유하는 것으로 
     private val listViewModel: ListViewModel by activityViewModels()
+
+
+    private val ocrTableService: OCRTableService = OCRTableService()
 
     //fragment viewBinding 하는방법..?
     private var _binding: FragmentListOcrBinding? = null
@@ -73,7 +78,8 @@ class ListOcrFragment : Fragment() {
         // repository  -> adapter -> recy
         listViewModel.listTableData.observe(viewLifecycleOwner) { data ->
             adapter = TableAdapter(data, listViewModel)
-            binding.recyclerView.adapter = adapter // recyclerView 로 adapter 를 붙여주는 것 -> ViewHolder를 붙여주는 것
+            binding.recyclerView.adapter =
+                adapter // recyclerView 로 adapter 를 붙여주는 것 -> ViewHolder를 붙여주는 것
         }
 
         listViewModel.listTableData.value = adapter.data
@@ -101,6 +107,19 @@ class ListOcrFragment : Fragment() {
             Log.d("viewModel-table2 ", "종료 시점 : ${listViewModel.listTableData.value} ")
             Log.d("viewModel-edit ", "최근에 변한 위치 : ${listViewModel.editRowData.value} ")
 
+            listViewModel.listTableData.observe(viewLifecycleOwner) { pair ->
+                val current_list: ArrayList<ArrayList<String>> = pair
+                val current_ocr = OCRTable()
+                for (innerList in current_list) {
+                    try {
+                        Integer.valueOf(innerList.first())
+                    } catch (e: NumberFormatException) {
+                        continue
+                    }
+                    current_ocr.fromList(innerList)
+                    ocrTableService.addProduct(current_ocr)
+                }
+            }
             // fragment - 종속된 activity 같이 종료 -> mainActivity로?
             requireActivity().finish()
 
