@@ -18,7 +18,7 @@ class TableAdapter(internal val data: ArrayList<ArrayList<String>>, private val 
         return ViewHolder(binding)
     }
 
-    //0~ data.size가 position으로 들어옴 RecyclerView이 매단계마다 onBindViewHolder를 불러서 List<String> 불러옴
+    //0~ data.size가 position으로 들어옴 RecyclerView이 매단계마다 onBindViewHolder를 불러서 ArrayList<String> 불러옴
     override fun onBindViewHolder(holder: TableAdapter.ViewHolder, position: Int) {
         val row = data[position]
         holder.bind(row)
@@ -36,7 +36,7 @@ class TableAdapter(internal val data: ArrayList<ArrayList<String>>, private val 
         } // 선택한 열을
     }
 
-    //<List<String> 총 개수
+    //ArrayList<String> 총 개수
     override fun getItemCount(): Int = data.size
 
 

@@ -54,13 +54,17 @@ class ListActivity : AppCompatActivity() {
 
             // list_Activity 의 frameLayOut 의 fragment 위치를 찾는 것
             val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-            // fragment가 있다면..?
+
+
+            // fragment가 있을떄 다시 사진을 찍는다면 fragment를 삭제한다
             if (currentFragment is ListOcrFragment) {
                 supportFragmentManager.beginTransaction()
                     .remove(currentFragment)
                     .commit()
                 Log.d("btnCamera", "기존 fragment 삭제  ")
             }
+
+
             takeCapture()  // 기본 카메라 앱을 실행하여 사진 촬영
         }
 

@@ -13,12 +13,11 @@ class ListViewModel : ViewModel() {
     // 원래 private - getter로 전달해야하지만 ...
     val listBitMapLiveData: MutableLiveData<Bitmap> = MutableLiveData()
 
-
     // fragment
     val listTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
-
     val listTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = listTableData
-    
+
+    //
     // 2가지 값을 한번에 묶어서 전달할 수 있음
     val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
 
