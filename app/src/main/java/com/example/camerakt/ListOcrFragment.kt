@@ -77,6 +77,7 @@ class ListOcrFragment : Fragment() {
         // data -> : observe에 의해  ArrayList<ArrayList<String>>의 변경이 감지되었을때 -> 이후 실행 ( data를 adapter로 넘긴다)
         // repository  -> adapter -> recy
         listViewModel.listTableData.observe(viewLifecycleOwner) { data ->
+
             adapter = TableAdapter(data, listViewModel)
             binding.recyclerView.adapter =
                 adapter // recyclerView 로 adapter 를 붙여주는 것 -> ViewHolder를 붙여주는 것
