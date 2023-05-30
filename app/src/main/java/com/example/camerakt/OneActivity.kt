@@ -45,13 +45,40 @@ class OneActivity : AppCompatActivity() {
         { bitmap -> binding.oneImage.setImageBitmap(bitmap) }
 
         binding.btnCameraOne.setOnClickListener {
+            // list_Activity 의 frameLayOut 의 fragment 위치를 찾는 것
+            val currentFragment =
+                supportFragmentManager.findFragmentById(R.id.fragment_container_one)
+            // fragment가 있다면..?
+            if (currentFragment is OneOcrFragment) {
+                supportFragmentManager.beginTransaction()
+                    .remove(currentFragment)
+                    .commit()
+                Log.d("btnCamera", "기존 fragment 삭제  ")
+            }
             takeCapture()  // 기본 카메라 앱을 실행하여 사진 촬영
         }
 
         binding.btnOcrOne.setOnClickListener {
-            onClick(it)
+            //onClick(it)
+            if (binding.oneImage.drawable != null) {
+
+                onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영
+
+                //fragment 생성 해서 activity 위에 붙여놓음
+                val fragment = OneOcrFragment()
+                // fragment 해주는 역할
+                val transaction = supportFragmentManager.beginTransaction()
+                //listActivity
+                transaction.replace(R.id.fragment_container_one, fragment)
+                transaction.commit()
+
+            } else {
+                Toast.makeText(this, "oneImage가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("empty Image", "이미지 존재하지 않음")
+            }
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun onClick(v: View) {
@@ -62,8 +89,8 @@ class OneActivity : AppCompatActivity() {
                 Toast.makeText(this, "One - clicked", Toast.LENGTH_SHORT).show()
                 data =
                     myEncoder.encodeImage(myEncoder.getBitmap(binding.oneImage.drawable.toBitmap())) // bitmap 가져와서 -> base64로 변환
+                Log.d("시작", "시작")
                 data?.let { oneViewModel.setInferred(it, this) } // 클릭시 post 값 띄움
-
             }
         }
     }

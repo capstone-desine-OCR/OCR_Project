@@ -20,11 +20,13 @@ object RepositoryImpl : Repository {
     private val retrofitService = retrofit.create(RetrofitService::class.java) // Retrofit 인터페이스 구현
     var requestData = RecognitionRequest() //요청 바디
 
+
     //    var result = ArrayList<String>()
 //    var onReturn: ((ArrayList<String>) -> Unit)? = null
 
-    var lineList = ArrayList<ArrayList<String>>()
 
+    // 초기화 필요 - 2번찍으면 계속 중첩
+    var lineList = ArrayList<ArrayList<String>>()
     var lineReturn: ((ArrayList<ArrayList<String>>) -> Unit)? = null
 //    var lineReturn: ((ArrayList<ArrayList<String>>))? = null  // ??  이렇게 쓰면 invoke 함수를 쓰지못하는듯 ->
 
@@ -53,16 +55,17 @@ object RepositoryImpl : Repository {
         retrofitService.postRequest(requestData).enqueue(object : retrofit2.Callback<Example> {
             override fun onResponse(call: Call<Example>, response: Response<Example>) {
 
+
                 Log.d("ddd", "Response_Code : ${response.code()} == ${response.message()}")
                 Log.d(
-                        "ddd",
-                        "Header : ${ // 요청의 헤더 정보
-                            retrofitService.postRequest(requestData).request().headers().toString()
-                        }"
+                    "ddd",
+                    "Header : ${ // 요청의 헤더 정보
+                        retrofitService.postRequest(requestData).request().headers().toString()
+                    }"
                 )
                 Log.d(
-                        "ddd", // 요청의 url 정보
-                        "Url : ${retrofitService.postRequest(requestData).request().url().toString()}"
+                    "ddd", // 요청의 url 정보
+                    "Url : ${retrofitService.postRequest(requestData).request().url().toString()}"
                 )
 
                 if (response.isSuccessful) {
@@ -94,7 +97,7 @@ object RepositoryImpl : Repository {
 
 
                                         val cellTextLines =
-                                                cell.cellTextLines    //  List<CellTextLine> cellTextLines
+                                            cell.cellTextLines    //  List<CellTextLine> cellTextLines
 
                                         for (cellTextLine in cellTextLines) {
                                             val cellWords = cellTextLine.cellWords  // List<CellWord> cellWords

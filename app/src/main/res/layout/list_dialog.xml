@@ -32,14 +32,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:hint="Import Date"/>
+            android:hint="InDate"/>
 
     <EditText
             android:id="@+id/edit_outdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:hint="Entry Date"/>
+            android:hint="OutDate"/>
 
     <EditText
             android:id="@+id/edit_weight"
@@ -53,28 +53,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:hint="Quantity"/>
+            android:hint="Count"/>
 
     <EditText
             android:id="@+id/edit_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:hint="Unit Price"/>
+            android:hint="Price"/>
 
     <EditText
             android:id="@+id/edit_won"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:hint="Total Amount"/>
+            android:hint="Won"/>
 
     <EditText
             android:id="@+id/edit_extra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:hint="Remarks"/>
+            android:hint="Extra"/>
 
 
 </LinearLayout>

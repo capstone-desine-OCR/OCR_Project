@@ -3,6 +3,7 @@ package com.example.camerakt.viewmodel
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.camerakt.database.model.OCRTable
@@ -13,8 +14,11 @@ class OneViewModel : ViewModel() {
     var repository = RepositoryImpl
 
     val oneBitMapLiveData: MutableLiveData<Bitmap> = MutableLiveData()
+
     val oneTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
-    //val oneTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = oneTableData
+    val oneTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = oneTableData
+
+    val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
 
     private val ocrTableService: OCRTableService = OCRTableService()
 
@@ -24,11 +28,11 @@ class OneViewModel : ViewModel() {
         val ocrTable = OCRTable()
         var tmpList: ArrayList<ArrayList<String>>
         var oneList: ArrayList<ArrayList<String>>
+
         repository.getResult(data) // 데이터를 가져오고
 
         repository.lineReturn = {
-            oneTableData.value =
-                it  // ArrayList<ArrayList<String>>> MutableLiveData로 담아서 obsever가 인식할 수 있도록 view로 던짐
+            // ArrayList<ArrayList<String>>> MutableLiveData로 담아서 obsever가 인식할 수 있도록 view로 던짐
 
             /* it
             [코드,BL-11],[원산지, 베트남],[중량,20,수량,356],,,*/
@@ -38,24 +42,27 @@ class OneViewModel : ViewModel() {
              [중량, 20], [수량, 345], [단가, $15], [금액, W230.68], [비고, 하자X]]*/
 
             tmpList = recombineArrayList(it)
-
+            Log.d("tmpList", tmpList.toString())
             /*oneList
             [[코드, 원산지, 품종, 수입날짜, 반입날짜, 중량, 수량, 단가, 금액, 비고],
              [BL-11, 베트남, 고추, 2023-06-15, 2023-06-27, 20, 345, $15, W230.68, 하자X]]*/
 
             oneList = seperateList(tmpList)
-            Log.d("List", oneList.toString())
-            for (i in oneList.indices) {
-                if (i == 0) {
-                    Log.d("pass", ".") //index 0 : [번호, 코드 , 원산지, 품종, 수입날짜 ,...,비고]
-                } else {
-                    val currentList = oneList[i]
-                    ocrTable.fromList(currentList)
-                    ocrTableService.addProduct(ocrTable)
-                }
-            }
+            Log.d("oneList", oneList.toString())
 
-            Log.d("products", ocrTableService.getAllProducts().toString())
+            oneTableData.value = oneList
+
+//            for (i in oneList.indices) {
+//                if (i == 0) {
+//                    Log.d("pass", ".") //index 0 : [번호, 코드 , 원산지, 품종, 수입날짜 ,...,비고]
+//                } else {
+//                    val currentList = oneList[i]
+////                    ocrTable.fromList(currentList)
+////                    ocrTableService.addProduct(ocrTable)
+//                }
+//            }
+
+//            Log.d("products", ocrTableService.getAllProducts().toString())
 
             //liveData_String.postValue(result)
 
@@ -85,6 +92,7 @@ class OneViewModel : ViewModel() {
                     Log.d("value", value)
                     productData[name] = value
                 }
+
             }
         }
 
@@ -137,9 +145,6 @@ class OneViewModel : ViewModel() {
         outputList.add(List2)
 
         return outputList
-
-
     }
-
 
 }
