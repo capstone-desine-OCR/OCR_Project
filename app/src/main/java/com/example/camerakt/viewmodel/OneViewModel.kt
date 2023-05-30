@@ -85,7 +85,6 @@ class OneViewModel : ViewModel() {
                     Log.d("value", value)
                     productData[name] = value
                 }
-
             }
         }
 
