@@ -66,6 +66,24 @@ class OneOcrFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             Log.d("btn_save", "one_click")
+
+            val modifiedRow = ArrayList<String>().apply {
+                add(binding.codeEditText.text.toString())
+                add(binding.orginEditText.text.toString())
+                add(binding.cultivarEditText.text.toString())
+                add(binding.indateEditText.text.toString())
+                add(binding.outdateEditText.text.toString())
+                add(binding.weightEditText.text.toString())
+                add(binding.countEditText.text.toString())
+                add(binding.priceEditText.text.toString())
+                add(binding.wonEditText.text.toString())
+                add(binding.exrtaEditText.text.toString())
+            }
+
+            for (modify in modifiedRow) {
+                Log.d("modify", "modify : $modify")
+            }
+
         }
 
     }
