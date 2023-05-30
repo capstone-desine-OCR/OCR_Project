@@ -20,13 +20,10 @@ object RepositoryImpl : Repository {
     private val retrofitService = retrofit.create(RetrofitService::class.java) // Retrofit 인터페이스 구현
     var requestData = RecognitionRequest() //요청 바디
 
-
     //    var result = ArrayList<String>()
 //    var onReturn: ((ArrayList<String>) -> Unit)? = null
 
 
-    // 초기화 필요 - 2번찍으면 계속 중첩
-    var lineList = ArrayList<ArrayList<String>>()
     var lineReturn: ((ArrayList<ArrayList<String>>) -> Unit)? = null
 //    var lineReturn: ((ArrayList<ArrayList<String>>))? = null  // ??  이렇게 쓰면 invoke 함수를 쓰지못하는듯 ->
 
@@ -55,6 +52,8 @@ object RepositoryImpl : Repository {
         retrofitService.postRequest(requestData).enqueue(object : retrofit2.Callback<Example> {
             override fun onResponse(call: Call<Example>, response: Response<Example>) {
 
+                // 초기화 필요 - 2번찍으면 계속 중첩
+                var lineList = ArrayList<ArrayList<String>>()
 
                 Log.d("ddd", "Response_Code : ${response.code()} == ${response.message()}")
                 Log.d(

@@ -15,7 +15,7 @@ class OneViewModel : ViewModel() {
 
     val oneBitMapLiveData: MutableLiveData<Bitmap> = MutableLiveData()
 
-    val oneTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
+    var oneTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
     val oneTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = oneTableData
 
     val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
