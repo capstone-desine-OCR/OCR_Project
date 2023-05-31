@@ -35,7 +35,6 @@ class OneOcrFragment : Fragment() {
     ): View? {
         _binding = FragmentOneOcrBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     // onCreateView 에서의 view 객체가 파라미터로 전달되어짐 -> INITIALIZED 상태
@@ -83,6 +82,9 @@ class OneOcrFragment : Fragment() {
             for (modify in modifiedRow) {
                 Log.d("modify", "modify : $modify")
             }
+
+
+            requireActivity().finish()
 
         }
 

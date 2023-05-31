@@ -104,7 +104,7 @@ object RepositoryImpl : Repository {
                                             for (cellWord in cellWords) {
 
                                                 val cellText = cellWord.inferText  // String inferText  ( 세로 )
-
+                                                Log.d("cellWord-inferText", "$cellText")
                                                 //lineList.get(row) = ArrayList<String>
                                                 lineList[row].add(cellText)  // 코틀린에서는 indexing 문법을 더 선호한다고 함 . get 보다
 //                                                    result.add(cellText)

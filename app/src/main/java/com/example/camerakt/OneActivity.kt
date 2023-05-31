@@ -62,7 +62,7 @@ class OneActivity : AppCompatActivity() {
             //onClick(it)
             if (binding.oneImage.drawable != null) {
 
-                onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영
+                onClick(it)
 
                 //fragment 생성 해서 activity 위에 붙여놓음
                 val fragment = OneOcrFragment()
@@ -71,7 +71,7 @@ class OneActivity : AppCompatActivity() {
                 //listActivity
                 transaction.replace(R.id.fragment_container_one, fragment)
                 transaction.commit()
-
+                
             } else {
                 Toast.makeText(this, "oneImage가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
                 Log.d("empty Image", "이미지 존재하지 않음")

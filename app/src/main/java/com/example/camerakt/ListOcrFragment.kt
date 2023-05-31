@@ -129,9 +129,7 @@ class ListOcrFragment : Fragment() {
 //                ?.beginTransaction()
 //                ?.remove(this)
 //                ?.commit()
-
         }
-
     }
 
 

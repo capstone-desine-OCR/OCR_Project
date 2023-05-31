@@ -21,16 +21,18 @@
                     android:id="@+id/codeEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="CODE"/>
 
             <EditText
                     android:id="@+id/orginEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="orgin"/>
 
 
@@ -38,8 +40,9 @@
                     android:id="@+id/cultivarEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="cultivar"/>
 
 
@@ -47,8 +50,9 @@
                     android:id="@+id/indateEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="indate"/>
 
 
@@ -56,8 +60,9 @@
                     android:id="@+id/outdateEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="outdate"/>
 
 
@@ -65,8 +70,9 @@
                     android:id="@+id/weightEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="weight"/>
 
 
@@ -74,8 +80,9 @@
                     android:id="@+id/countEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="count"/>
 
 
@@ -83,8 +90,9 @@
                     android:id="@+id/priceEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="price"/>
 
 
@@ -92,8 +100,9 @@
                     android:id="@+id/wonEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="won"/>
 
 
@@ -101,15 +110,16 @@
                     android:id="@+id/exrtaEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:inputType="text"
+                    android:textColor="#000000"
                     android:text="extra"/>
 
             <Button
                     android:id="@+id/btn_save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="12dp"
                     android:text="@string/save"/>
 
         </LinearLayout>
