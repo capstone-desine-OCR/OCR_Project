@@ -46,17 +46,17 @@ class TableAdapter(internal val data: ArrayList<ArrayList<String>>, private val 
         //        private val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
         fun bind(row: ArrayList<String>) {
             // 독립적으로 작동 ?
-            binding.listNumber.text = row[0]
-            binding.listCode.text = row[1]
-            binding.listOrigin.text = row[2]
-            binding.listCultivar.text = row[3]
-            binding.listIndate.text = row[4]
-            binding.listOutdate.text = row[5]
-            binding.listWeight.text = row[6]
-            binding.listCount.text = row[7]
-            binding.listPrice.text = row[8]
-            binding.listWon.text = row[9]
-            binding.listExtra.text = row[10]
+//            binding.listNumber.text = row[0]
+            binding.listCode.text = row[0]
+            binding.listOrigin.text = row[1]
+            binding.listCultivar.text = row[2]
+            binding.listIndate.text = row[3]
+            binding.listOutdate.text = row[4]
+            binding.listWeight.text = row[5]
+            binding.listCount.text = row[6]
+            binding.listPrice.text = row[7]
+            binding.listWon.text = row[8]
+            binding.listExtra.text = row[9]
         }
 
 //        private fun showEditDialog(view: View, index: Int) {

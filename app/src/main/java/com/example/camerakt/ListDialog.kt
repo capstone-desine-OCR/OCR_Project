@@ -20,16 +20,16 @@ class ListDialog(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = ListDialogBinding.inflate(LayoutInflater.from(context))
 
-        binding.editCode.setText(row[1])
-        binding.editOrigin.setText(row[2])
-        binding.editCultivar.setText(row[3])
-        binding.editIndate.setText(row[4])
-        binding.editOutdate.setText(row[5])
-        binding.editWeight.setText(row[6])
-        binding.editCount.setText(row[7])
-        binding.editPrice.setText(row[8])
-        binding.editWon.setText(row[9])
-        binding.editExtra.setText(row[10])
+        binding.editCode.setText(row[0])
+        binding.editOrigin.setText(row[1])
+        binding.editCultivar.setText(row[2])
+        binding.editIndate.setText(row[3])
+        binding.editOutdate.setText(row[4])
+        binding.editWeight.setText(row[5])
+        binding.editCount.setText(row[6])
+        binding.editPrice.setText(row[7])
+        binding.editWon.setText(row[8])
+        binding.editExtra.setText(row[9])
 
         val builder = AlertDialog.Builder(context)
             .setTitle("목록 수정")
@@ -38,7 +38,6 @@ class ListDialog(
                 Log.d("수정 버튼1", "dialog : $dialog _ : 수정버튼 클릭 내용전달 x")
                 val modifiedRow = ArrayList<String>().apply {
 
-                    add(row[0])
                     add(binding.editCode.text.toString())
                     add(binding.editOrigin.text.toString())
                     add(binding.editCultivar.text.toString())
@@ -51,7 +50,7 @@ class ListDialog(
                     add(binding.editExtra.text.toString())
                 }
                 Log.d("수정 버튼2", "수정 버튼2")
-                
+
                 listViewModel.editRowData.value = Pair(modifiedRow, position)
             })
             .setNegativeButton("취소", null)
