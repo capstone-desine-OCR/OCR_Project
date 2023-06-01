@@ -138,7 +138,12 @@ class OneViewModel : ViewModel() {
             List1.add(column)
         }
         for (i in 0 until inputList.size) {
-            val value: String = inputList[i][1]
+            val value: String =
+                try {
+                    inputList[i][1]
+                } catch (e: IndexOutOfBoundsException) {
+                    "인식 오류입니다! 재촬영 해주시길 바랍니다."
+                }
             List2.add(value)
         }
         outputList.add(List1)

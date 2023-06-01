@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.camerakt.database.model.OCRTable
+import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.databinding.FragmentOneOcrBinding
 import com.example.camerakt.viewmodel.OneViewModel
 
@@ -16,6 +18,7 @@ class OneOcrFragment : Fragment() {
     // viewModel liveData의 변경사항을 activity에서도 observe 할수 있고 , fragment에서도 observe 할 수 있다.
     // activity를 거치는 방법보단 바로 fragment로 보내는 방법을 택했기 때문에 동일한 viewModel을 공유하는 것으로
     private val oneViewModel: OneViewModel by activityViewModels()
+    private val ocrTableService: OCRTableService = OCRTableService()
 
     //fragment viewBinding 하는방법..?
     private var _binding: FragmentOneOcrBinding? = null
@@ -82,8 +85,10 @@ class OneOcrFragment : Fragment() {
             for (modify in modifiedRow) {
                 Log.d("modify", "modify : $modify")
             }
-
-
+            val current_ocr = OCRTable()
+            current_ocr.fromList(modifiedRow)
+            ocrTableService.addProduct(current_ocr)
+            
             requireActivity().finish()
 
         }
