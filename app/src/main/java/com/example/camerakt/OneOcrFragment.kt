@@ -90,7 +90,7 @@ class OneOcrFragment : Fragment() {
             val current_ocr = OCRTable()
 
             if (modifiedRow.contains(Variable.RECOGNITION_ERROR)) {
-                Toast.makeText(requireContext(), "인식 오류입니다.\n 재촬영 해주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), Variable.OCRBTN_TOAST, Toast.LENGTH_SHORT).show()
             } else {
                 current_ocr.fromList(modifiedRow)
                 ocrTableService.addProduct(current_ocr)
