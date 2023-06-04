@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.databinding.FragmentOneOcrBinding
+import com.example.camerakt.util.Variable
 import com.example.camerakt.viewmodel.OneViewModel
 
 class OneOcrFragment : Fragment() {
@@ -86,10 +88,15 @@ class OneOcrFragment : Fragment() {
                 Log.d("modify", "modify : $modify")
             }
             val current_ocr = OCRTable()
-            current_ocr.fromList(modifiedRow)
-            ocrTableService.addProduct(current_ocr)
-            
-            requireActivity().finish()
+
+            if (modifiedRow.contains(Variable.RECOGNITION_ERROR)) {
+                Toast.makeText(requireContext(), "인식 오류입니다.\n 재촬영 해주세요!", Toast.LENGTH_SHORT).show()
+            } else {
+                current_ocr.fromList(modifiedRow)
+                ocrTableService.addProduct(current_ocr)
+
+                requireActivity().finish()
+            }
 
         }
 

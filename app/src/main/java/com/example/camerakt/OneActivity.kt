@@ -62,16 +62,19 @@ class OneActivity : AppCompatActivity() {
             //onClick(it)
             if (binding.oneImage.drawable != null) {
 
-                onClick(it)
+                if (supportFragmentManager.findFragmentById(R.id.fragment_container_one) is OneOcrFragment) {
+                    Toast.makeText(this, "인식 결과가 존재합니다. 재촬영 해주시길 바랍니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    onClick(it)
 
-                //fragment 생성 해서 activity 위에 붙여놓음
-                val fragment = OneOcrFragment()
-                // fragment 해주는 역할
-                val transaction = supportFragmentManager.beginTransaction()
-                //listActivity
-                transaction.replace(R.id.fragment_container_one, fragment)
-                transaction.commit()
-                
+                    //fragment 생성 해서 activity 위에 붙여놓음
+                    val fragment = OneOcrFragment()
+                    // fragment 해주는 역할
+                    val transaction = supportFragmentManager.beginTransaction()
+                    //listActivity
+                    transaction.replace(R.id.fragment_container_one, fragment)
+                    transaction.commit()
+                }
             } else {
                 Toast.makeText(this, "oneImage가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
                 Log.d("empty Image", "이미지 존재하지 않음")

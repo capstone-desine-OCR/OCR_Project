@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.repository.RepositoryImpl
+import com.example.camerakt.util.Variable
 
 class OneViewModel : ViewModel() {
     var repository = RepositoryImpl
@@ -142,7 +143,7 @@ class OneViewModel : ViewModel() {
                 try {
                     inputList[i][1]
                 } catch (e: IndexOutOfBoundsException) {
-                    "인식 오류입니다! 재촬영 해주시길 바랍니다."
+                    Variable.RECOGNITION_ERROR
                 }
             List2.add(value)
         }
