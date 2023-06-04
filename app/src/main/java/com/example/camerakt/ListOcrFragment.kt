@@ -53,14 +53,13 @@ class ListOcrFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
+        // requireContext() : Activity -> fragment 로 주는 context
+        // RecyclerView 를 어떻게 배치할지 : 선형배치 방식으로!
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         // adapter 초기 init -> adapter는 ArrayList<>() 한줄임
         adapter = TableAdapter(ArrayList(), listViewModel)
         binding.recyclerView.adapter = adapter
-        // requireContext() : Activity -> fragment 로 주는 context
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext()) // 선형 배치
-
-//        listViewModel.listTableData.value = adapter.data
-//        Log.d("viewModel-table1 ", "초기화? : ${listViewModel.listTableData.value} ")
 
 
         // data -> : observe에 의해  ArrayList<ArrayList<String>>의 변경이 감지되었을때 -> 이후 실행 ( data를 adapter로 넘긴다)
@@ -98,11 +97,11 @@ class ListOcrFragment : Fragment() {
                 val current_list: ArrayList<ArrayList<String>> = pair
                 val current_ocr = OCRTable()
                 for (innerList in current_list) {
-                    try {
-                        Integer.valueOf(innerList.first())
-                    } catch (e: NumberFormatException) {
-                        continue
-                    }
+//                    try {
+//                        Integer.valueOf(innerList.first())
+//                    } catch (e: NumberFormatException) {
+//                        continue
+//                    }
                     current_ocr.fromList(innerList)
                     ocrTableService.addProduct(current_ocr)
                 }
