@@ -3,6 +3,7 @@ package com.example.camerakt.database.service;
 import com.example.camerakt.database.OCRTableFirebaseHelper;
 import com.example.camerakt.database.model.OCRTable;
 
+import java.util.List;
 import java.util.Map;
 
 public class OCRTableService {
@@ -17,12 +18,14 @@ public class OCRTableService {
         dbHelper.addProduct(productData);
     }
 
-    public void getAllProducts() {
-        dbHelper.getAllProducts();
+    public List<OCRTable> getAllProducts() {
+        List<OCRTable> result = dbHelper.getAllProducts();
+        return result;
     }
 
-    public void getProduct(String productId) {
-        dbHelper.getProduct(productId);
+    public OCRTable getProduct(String productId) {
+        OCRTable ocr = dbHelper.getProduct(productId);
+        return ocr;
     }
 
     public void updateProduct(String productId, Map<String, Object> newData) {

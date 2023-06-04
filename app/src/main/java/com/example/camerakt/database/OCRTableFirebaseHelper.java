@@ -3,21 +3,23 @@ package com.example.camerakt.database;
 
 import android.util.Log;
 
+import com.example.camerakt.database.model.OCRTable;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.WriteBatch;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class OCRTableFirebaseHelper{
+public class OCRTableFirebaseHelper {
     FirebaseFirestore fireDB;
     CollectionReference productsCollection;
 
-    public OCRTableFirebaseHelper(){
-        fireDB=FirebaseFirestore.getInstance();
-        productsCollection=fireDB.collection("products");
+    public OCRTableFirebaseHelper() {
+        fireDB = FirebaseFirestore.getInstance();
+        productsCollection = fireDB.collection("products");
     }
 
 
@@ -36,28 +38,35 @@ public class OCRTableFirebaseHelper{
     }
 
     // Read - 전체 문서 조회
-    public void getAllProducts() {
+    public List<OCRTable> getAllProducts() {
+        List<OCRTable> result = new ArrayList<>();
 
         productsCollection.get()
                 .addOnSuccessListener(querySnapshot -> {
+                    OCRTable ocr = new OCRTable();
                     for (DocumentSnapshot document : querySnapshot) {
                         Log.d("current", document.getId() + " => " + document.getData());
+                        documentToOCRTable(ocr, document);
+                        result.add(ocr);
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("current", "Error getting products", e);
                 });
+
+        return result;
     }
 
     // 개별 문서 조회
-    public void getProduct(String productId) {
-
+    public OCRTable getProduct(String productId) {
+        OCRTable ocrTable = new OCRTable();
         DocumentReference productRef = productsCollection.document(productId);
         productRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         Log.d("current", "Document ID: " + documentSnapshot.getId());
                         Log.d("current", "Document data: " + documentSnapshot.getData());
+                        documentToOCRTable(ocrTable, documentSnapshot);
 
                     } else {
                         Log.d("current", "Document does not exist");
@@ -66,6 +75,8 @@ public class OCRTableFirebaseHelper{
                 .addOnFailureListener(e -> {
                     Log.e("current", "Error getting product", e);
                 });
+
+        return ocrTable;
     }
 
 
@@ -96,7 +107,19 @@ public class OCRTableFirebaseHelper{
     }
 
 
-
+    public void documentToOCRTable(OCRTable result, DocumentSnapshot document) {
+        result.setNum(Integer.valueOf((String) document.get("번호")));
+        result.setCode((String) document.get("코드"));
+        result.setOrigin((String) document.get("원산지"));
+        result.setCultivar((String) document.get("품종"));
+        result.setIndate((String) document.get("수입날짜"));
+        result.setOutdate((String) document.get("반입날짜"));
+        result.setWeight(Integer.valueOf((String) document.get("중량")));
+        result.setCount(Integer.valueOf((String) document.get("수량")));
+        result.setPrice((String) document.get("단가"));
+        result.setWon((String) document.get("금액"));
+        result.setExtra((String) document.get("비고"));
+    }
 
 
 }
