@@ -153,32 +153,32 @@ class ListActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Toast.makeText(this, "onStart List", Toast.LENGTH_SHORT).show()
+        Log.d("listActivity", "")
     }
 
     override fun onResume() {
         super.onResume()
-        Toast.makeText(this, "onResume List", Toast.LENGTH_SHORT).show()
+        Log.d("listActivity", "onResume List")
     }
 
     override fun onPause() {
         super.onPause()
-        Toast.makeText(this, "onPause List", Toast.LENGTH_SHORT).show()
+        Log.d("listActivity", "onPause List")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Toast.makeText(this, "onRestart List", Toast.LENGTH_SHORT).show()
+        Log.d("listActivity", "onRestart List")
     }
 
     override fun onStop() {
         super.onStop()
-        Toast.makeText(this, "onStop List", Toast.LENGTH_SHORT).show()
+        Log.d("listActivity", "onStop List")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Toast.makeText(this, "onDestroy List", Toast.LENGTH_SHORT).show()
+        Log.d("listActivity", "onDestroy List")
     }
 
 }

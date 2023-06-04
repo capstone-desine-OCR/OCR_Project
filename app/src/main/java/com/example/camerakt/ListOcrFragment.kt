@@ -28,6 +28,8 @@ class ListOcrFragment : Fragment() {
     //fragment viewBinding 하는방법..?
     private var _binding: FragmentListOcrBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var adapter: TableAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,28 +52,15 @@ class ListOcrFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        //           Test용
-//        val data = arrayListOf(
-//            arrayListOf("번호", "코드", "원산지", "품종", "수입 날짜", "반입 날짜", "중량", "수량", "단가", "총액", "비고"),
-//            arrayListOf("1", "A", "Seoula", "a", "2023-05-01", "2023-05-30a", "akg", "10", "10000", "100000", "None"),
-//            arrayListOf("2", "b", "Seoulb", "b", "2023-05-01", "2023-05-30b", "bkg", "10", "10000", "100000", "None"),
-//            arrayListOf("3", "c", "Seoulc", "c", "2023-05-01", "2023-05-30c", "ckg", "10", "10000", "100000", "None"),
-//            arrayListOf("4", "d", "Seould", "d", "2023-05-01", "2023-05-30d", "dkg", "10", "10000", "100000", "None"),
-//            arrayListOf("5", "e", "Seoule", "e", "2023-05-01", "2023-05-30e", "ekg", "10", "10000", "100000", "None"),
-//        )
-//
-//        val adapter = TableAdapter(data, listViewModel) // 생성자로써 전달
-//        binding.recyclerView.adapter = adapter
-//        binding.recyclerView.layoutManager =
-//            LinearLayoutManager(requireContext()) // context , requiredContext() 동일 -> null 포함여부
-//        listViewModel.listTableData.value = adapter.data
-//          Test 용 data 종료
-
 
         // adapter 초기 init -> adapter는 ArrayList<>() 한줄임
-        var adapter: TableAdapter = TableAdapter(ArrayList(), listViewModel)
+        adapter = TableAdapter(ArrayList(), listViewModel)
+        binding.recyclerView.adapter = adapter
         // requireContext() : Activity -> fragment 로 주는 context
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext()) // 선형 배치
+
+//        listViewModel.listTableData.value = adapter.data
+//        Log.d("viewModel-table1 ", "초기화? : ${listViewModel.listTableData.value} ")
 
 
         // data -> : observe에 의해  ArrayList<ArrayList<String>>의 변경이 감지되었을때 -> 이후 실행 ( data를 adapter로 넘긴다)
@@ -82,9 +71,6 @@ class ListOcrFragment : Fragment() {
             binding.recyclerView.adapter =
                 adapter // recyclerView 로 adapter 를 붙여주는 것 -> ViewHolder를 붙여주는 것
         }
-
-        listViewModel.listTableData.value = adapter.data
-        Log.d("viewModel-table1 ", "초기화? : ${listViewModel.listTableData.value} ")
 
 
         // 목록 수정 adapter -> dialog -> fragment
@@ -124,11 +110,6 @@ class ListOcrFragment : Fragment() {
             // fragment - 종속된 activity 같이 종료 -> mainActivity로?
             requireActivity().finish()
 
-            // 현재 fragment 창만 꺼지는듯 -> listActivity로
-//            activity?.supportFragmentManager
-//                ?.beginTransaction()
-//                ?.remove(this)
-//                ?.commit()
         }
     }
 
