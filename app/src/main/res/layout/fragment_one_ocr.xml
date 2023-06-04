@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/Fragment_one"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@android:color/white"
-             android:gravity="center"
-             tools:context=".OneActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Fragment_one"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:gravity="center"
+    tools:context=".OneActivity">
 
     <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/codeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="CODE"
+                android:textColor="#000000" />
 
             <EditText
-                    android:id="@+id/codeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="CODE"/>
-
-            <EditText
-                    android:id="@+id/orginEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="orgin"/>
+                android:id="@+id/orginEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="orgin"
+                android:textColor="#000000" />
 
 
             <EditText
-                    android:id="@+id/cultivarEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="cultivar"/>
+                android:id="@+id/cultivarEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="cultivar"
+                android:textColor="#000000" />
 
 
             <EditText
-                    android:id="@+id/indateEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="indate"/>
+                android:id="@+id/indateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="indate"
+                android:textColor="#000000" />
 
 
             <EditText
-                    android:id="@+id/outdateEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="outdate"/>
+                android:id="@+id/outdateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="outdate"
+                android:textColor="#000000" />
 
 
             <EditText
-                    android:id="@+id/weightEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="weight"/>
+                android:id="@+id/weightEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="weight"
+                android:textColor="#000000" />
 
 
             <EditText
-                    android:id="@+id/countEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="count"/>
+                android:id="@+id/countEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="count"
+                android:textColor="#000000" />
 
 
             <EditText
-                    android:id="@+id/priceEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="price"/>
+                android:id="@+id/priceEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="price"
+                android:textColor="#000000" />
 
 
             <EditText
-                    android:id="@+id/wonEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="won"/>
+                android:id="@+id/wonEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="won"
+                android:textColor="#000000" />
 
 
             <EditText
-                    android:id="@+id/exrtaEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:text="extra"/>
+                android:id="@+id/exrtaEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="text"
+                android:text="extra"
+                android:textColor="#000000" />
 
             <Button
-                    android:id="@+id/btn_save"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:text="@string/save"/>
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:text="@string/save" />
 
         </LinearLayout>
     </ScrollView>
