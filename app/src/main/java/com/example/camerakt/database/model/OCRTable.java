@@ -57,21 +57,7 @@ public class OCRTable {
                 extra = input.get(10);
             }*/
         } catch (NumberFormatException e) {
-            //arrayListOf("코드", "원산지", "품종", "수입날짜", "반입날짜", "중량", "수량", "단가", "금액","비고")
 
-            // 첫번째 요소가 int로 변환 불가능한 경우
-            /*code = input.get(0);
-            origin = input.get(1);
-            cultivar = input.get(2);
-            indate = input.get(3);
-            outdate = input.get(4);
-            weight = Integer.valueOf(input.get(5));
-            count = Integer.valueOf(input.get(6));
-            price = input.get(7);
-            won = input.get(8);
-            if (input.size() > 9) {
-                extra = input.get(9);
-            }
         }
     }
 
