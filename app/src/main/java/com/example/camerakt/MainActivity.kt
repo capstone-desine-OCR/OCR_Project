@@ -65,12 +65,8 @@ class MainActivity : AppCompatActivity() {
         setPermission() // 앱 시작할때 권한 체크하는 메소드 수행
 
         binding.btnTable.setOnClickListener {
-
-//            Log.d("인텐트", "넘김 : ${contracts.toString()}")
-            val intent = Intent(this, TableActivity::class.java) // 인텐트 객체 생성
-//            intent.putExtra("contracts", ArrayList(contracts)) // 인텐트에 데이터 전달
+            val intent = Intent(this, TableActivity::class.java)
             startActivity(intent)
-
         }
 
         binding.btnList.setOnClickListener {
