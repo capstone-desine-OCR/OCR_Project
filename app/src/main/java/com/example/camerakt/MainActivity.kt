@@ -135,7 +135,67 @@ class MainActivity : AppCompatActivity() {
                     22, 4, "200", "KRW", "Extra 10"
                 )
             )
-
+//            val ocrTable1 = OCRTable(
+//                "001", "Origin 1", "Cultival 1", "2023-06-01", "2023-06-10",
+//                10, 2, "100", "KRW", "Extra 1"
+//            )
+//
+//            val ocrTable2 = OCRTable(
+//                "002", "Origin 2", "Cultival 2", "2023-06-05", "2023-06-15",
+//                15, 3, "150", "KRW", "Extra 2"
+//            )
+//
+//            val ocrTables = ArrayList<OCRTable>()
+//            ocrTables.add(ocrTable1)
+//            ocrTables.add(ocrTable2)
+//
+//            val ocrTable3 = OCRTable(
+//                "003", "Origin 3", "Cultival 3", "2023-06-12", "2023-06-20",
+//                8, 1, "80", "KRW", "Extra 3"
+//            )
+//            ocrTables.add(ocrTable3)
+//
+//            val ocrTable4 = OCRTable(
+//                "004", "Origin 4", "Cultival 4", "2023-06-07", "2023-06-14",
+//                12, 4, "200", "KRW", "Extra 4"
+//            )
+//            ocrTables.add(ocrTable4)
+//
+//            val ocrTable5 = OCRTable(
+//                "005", "Origin 5", "Cultival 5", "2023-06-18", "2023-06-25",
+//                20, 3, "180", "KRW", "Extra 5"
+//            )
+//            ocrTables.add(ocrTable5)
+//
+//            val ocrTable6 = OCRTable(
+//                "006", "Origin 6", "Cultival 6", "2023-06-22", "2023-06-29",
+//                14, 2, "120", "KRW", "Extra 6"
+//            )
+//            ocrTables.add(ocrTable6)
+//
+//            val ocrTable7 = OCRTable(
+//                "007", "Origin 7", "Cultival 7", "2023-06-03", "2023-06-08",
+//                5, 2, "90", "KRW", "Extra 7"
+//            )
+//            ocrTables.add(ocrTable7)
+//
+//            val ocrTable8 = OCRTable(
+//                "008", "Origin 8", "Cultival 8", "2023-06-17", "2023-06-23",
+//                18, 5, "250", "KRW", "Extra 8"
+//            )
+//            ocrTables.add(ocrTable8)
+//
+//            val ocrTable9 = OCRTable(
+//                "009", "Origin 9", "Cultival 9", "2023-06-10", "2023-06-17",
+//                16, 3, "150", "KRW", "Extra 9"
+//            )
+//            ocrTables.add(ocrTable9)
+//
+//            val ocrTable10 = OCRTable(
+//                "010", "Origin 10", "Cultival 10", "2023-06-25", "2023-07-02",
+//                22, 4, "200", "KRW", "Extra 10"
+//            )
+//            ocrTables.add(ocrTable10)
 
             Log.d("인텐트", "넘김 : ${contracts.toString()}")
             val intent = Intent(this, SelectActivity::class.java) // 인텐트 객체 생성

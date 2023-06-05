@@ -7,17 +7,16 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.WriteBatch;
 
 import java.util.Map;
 
-public class OCRTableFirebaseHelper{
+public class OCRTableFirebaseHelper {
     FirebaseFirestore fireDB;
     CollectionReference productsCollection;
 
-    public OCRTableFirebaseHelper(){
-        fireDB=FirebaseFirestore.getInstance();
-        productsCollection=fireDB.collection("products");
+    public OCRTableFirebaseHelper() {
+        fireDB = FirebaseFirestore.getInstance();
+        productsCollection = fireDB.collection("products");
     }
 
 
@@ -94,9 +93,5 @@ public class OCRTableFirebaseHelper{
                     Log.e("current", "Error deleting product", e);
                 });
     }
-
-
-
-
 
 }

@@ -1,5 +1,6 @@
 package com.example.camerakt.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,8 +17,12 @@ class ContractListAdapter() : ListAdapter<Contract, ContractListAdapter.ViewHold
             binding.codeView.text = contract.code
             binding.originView.text = contract.orgin
             binding.cultivarView.text = contract.cultival
-        }
+            binding.Delete.setOnClickListener() {
+                Log.d("확인", "삭제버튼 : $contract.code")
+                //removeContract(contract)
+            }
 
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,6 +38,7 @@ class ContractListAdapter() : ListAdapter<Contract, ContractListAdapter.ViewHold
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
+
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Contract>() {

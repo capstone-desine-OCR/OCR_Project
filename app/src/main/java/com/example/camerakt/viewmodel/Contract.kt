@@ -15,13 +15,15 @@ class Contract(
     var won: String,
     var extra: String
 
-): Serializable {
+) : Serializable {
+
     @SerializedName("weight")
     private var weightStr: String = weight.toString()
 
     @SerializedName("count")
     private var countStr: String = count.toString()
 
-    constructor(): this( "", "", "", "", "", 0, 0, "", "", "")
+    constructor() : this("", "", "", "", "", 0, 0, "", "", "")
+
 
 }
