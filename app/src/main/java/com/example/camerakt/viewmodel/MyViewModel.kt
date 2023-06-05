@@ -50,7 +50,7 @@ class MyViewModel : ViewModel() {
                     ocrTableService.addProduct(ocrTable)
                 }
             }
-            Log.d("products", ocrTableService.getAllProducts().toString())
+//            Log.d("products", ocrTableService.getAllProducts().toString())
             Log.d("개별 조회", ".")
             //Log.d("product",ocrTableService.getProduct("2cSHQlwD1QdaoRIUrIsO").toString())
             liveData_String.postValue(result)

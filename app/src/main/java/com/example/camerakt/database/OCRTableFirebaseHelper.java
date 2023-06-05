@@ -2,6 +2,7 @@ package com.example.camerakt.database;
 
 
 import android.util.Log;
+import com.example.camerakt.database.callback.ProductCallBack;
 import com.example.camerakt.database.model.OCRTable;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -37,23 +38,44 @@ public class OCRTableFirebaseHelper {
     }
 
     // Read - 전체 문서 조회
-    public List<OCRTable> getAllProducts() {
-        List<OCRTable> result = new ArrayList<>();
+//    public List<OCRTable> getAllProducts() {
+//        List<OCRTable> result = new ArrayList<>();
+//
+//        productsCollection.get()
+//                .addOnSuccessListener(querySnapshot -> {
+//                    OCRTable ocr = new OCRTable();
+//                    for (DocumentSnapshot document : querySnapshot) {
+//                        Log.d("current ", document.getId() + " => " + document.getData());
+//                        documentToOCRTable(ocr, document);
+//                        result.add(ocr);
+//                    }
+//                })
+//                .addOnFailureListener(e -> {
+//                    Log.e("current", "Error getting products", e);
+//                });
+//
+//        return result;
+//    }
+    public void getAllProducts(ProductCallBack callBack) {
 
         productsCollection.get()
                 .addOnSuccessListener(querySnapshot -> {
-                    OCRTable ocr = new OCRTable();
+                    List<OCRTable> result = new ArrayList<>();
+
                     for (DocumentSnapshot document : querySnapshot) {
                         Log.d("current ", document.getId() + " => " + document.getData());
+                        OCRTable ocr = new OCRTable();
                         documentToOCRTable(ocr, document);
                         result.add(ocr);
                     }
+                    callBack.onSuccess(result);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("current", "Error getting products", e);
+                    callBack.onFailure(e);
                 });
 
-        return result;
+//        return result;
     }
 
     // 개별 문서 조회
@@ -113,16 +135,8 @@ public class OCRTableFirebaseHelper {
         result.setCultivar((String) document.get("품종"));
         result.setIndate((String) document.get("수입날짜"));
         result.setOutdate((String) document.get("반입날짜"));
-//        result.setWeight(Integer.valueOf((String) document.get("중량")));
-//        result.setWeight(Integer.parseInt((String) document.get("중량")));
-//        result.setCount(Integer.valueOf((String) document.get("수량")));
-//        result.setCount(Integer.parseInt((String) document.get("수량")));
-
-        int weight = document.getLong("중량").intValue();
-        result.setWeight(weight);
-        int count = document.getLong("수량").intValue();
-        result.setCount(count);
-
+        result.setWeight(document.getLong("중량").intValue());
+        result.setCount(document.getLong("수량").intValue());
         result.setPrice((String) document.get("단가"));
         result.setWon((String) document.get("금액"));
         result.setExtra((String) document.get("비고"));

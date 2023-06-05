@@ -1,9 +1,9 @@
 package com.example.camerakt.database.service;
 
 import com.example.camerakt.database.OCRTableFirebaseHelper;
+import com.example.camerakt.database.callback.ProductCallBack;
 import com.example.camerakt.database.model.OCRTable;
 
-import java.util.List;
 import java.util.Map;
 
 public class OCRTableService {
@@ -18,9 +18,14 @@ public class OCRTableService {
         dbHelper.addProduct(productData);
     }
 
-    public List<OCRTable> getAllProducts() {
-        List<OCRTable> result = dbHelper.getAllProducts();
-        return result;
+    //    public List<OCRTable> getAllProducts() {
+//        List<OCRTable> result = dbHelper.getAllProducts();
+//        return result;
+//    }
+    public void getAllProducts(ProductCallBack callBack) {
+//        List<OCRTable> result =
+        dbHelper.getAllProducts(callBack);
+//        return result;
     }
 
     public OCRTable getProduct(String productId) {
