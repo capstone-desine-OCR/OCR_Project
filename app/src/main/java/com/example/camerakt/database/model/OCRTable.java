@@ -74,45 +74,85 @@ public class OCRTable {
             }
         }
     }
-    
+
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
 
+    public String getOrigin() {
+        return origin;
+    }
+
     public void setOrigin(String origin) {
         this.origin = origin;
+    }
+
+    public String getCultivar() {
+        return cultivar;
     }
 
     public void setCultivar(String cultivar) {
         this.cultivar = cultivar;
     }
 
+    public String getIndate() {
+        return indate;
+    }
+
     public void setIndate(String indate) {
         this.indate = indate;
+    }
+
+    public String getOutdate() {
+        return outdate;
     }
 
     public void setOutdate(String outdate) {
         this.outdate = outdate;
     }
 
+    public int getWeight() {
+        return weight;
+    }
+
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public void setCount(int count) {
         this.count = count;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
     public void setPrice(String price) {
         this.price = price;
     }
 
+    public String getWon() {
+        return won;
+    }
+
     public void setWon(String won) {
         this.won = won;
+    }
+
+    public String getExtra() {
+        return extra;
     }
 
     public void setExtra(String extra) {

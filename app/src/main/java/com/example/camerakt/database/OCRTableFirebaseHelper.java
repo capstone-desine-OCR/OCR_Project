@@ -2,7 +2,6 @@ package com.example.camerakt.database;
 
 
 import android.util.Log;
-
 import com.example.camerakt.database.model.OCRTable;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -45,7 +44,7 @@ public class OCRTableFirebaseHelper {
                 .addOnSuccessListener(querySnapshot -> {
                     OCRTable ocr = new OCRTable();
                     for (DocumentSnapshot document : querySnapshot) {
-                        Log.d("current", document.getId() + " => " + document.getData());
+                        Log.d("current ", document.getId() + " => " + document.getData());
                         documentToOCRTable(ocr, document);
                         result.add(ocr);
                     }
@@ -108,14 +107,22 @@ public class OCRTableFirebaseHelper {
 
 
     public void documentToOCRTable(OCRTable result, DocumentSnapshot document) {
-        result.setNum(Integer.valueOf((String) document.get("번호")));
+//        result.setNum(Integer.valueOf((String) document.get("번호")));
         result.setCode((String) document.get("코드"));
         result.setOrigin((String) document.get("원산지"));
         result.setCultivar((String) document.get("품종"));
         result.setIndate((String) document.get("수입날짜"));
         result.setOutdate((String) document.get("반입날짜"));
-        result.setWeight(Integer.valueOf((String) document.get("중량")));
-        result.setCount(Integer.valueOf((String) document.get("수량")));
+//        result.setWeight(Integer.valueOf((String) document.get("중량")));
+//        result.setWeight(Integer.parseInt((String) document.get("중량")));
+//        result.setCount(Integer.valueOf((String) document.get("수량")));
+//        result.setCount(Integer.parseInt((String) document.get("수량")));
+
+        int weight = document.getLong("중량").intValue();
+        result.setWeight(weight);
+        int count = document.getLong("수량").intValue();
+        result.setCount(count);
+
         result.setPrice((String) document.get("단가"));
         result.setWon((String) document.get("금액"));
         result.setExtra((String) document.get("비고"));
