@@ -40,27 +40,27 @@ public class OCRTable {
     }
 
     public void fromList(List<String> input) {
-        String firstElement = input.get(0);
+        //String firstElement = input.get(0);
         try {
-            num = Integer.parseInt(firstElement);
-            code = input.get(1);
-            origin = input.get(2);
-            cultivar = input.get(3);
-            indate = input.get(4);
-            outdate = input.get(5);
-            weight = Integer.valueOf(input.get(6));
-            count = Integer.valueOf(input.get(7));
-            price = input.get(8);
-            won = input.get(9);
-
-            if (input.size() > 10) {
+            //num = Integer.parseInt(firstElement);
+            code = input.get(0);
+            origin = input.get(1);
+            cultivar = input.get(2);
+            indate = input.get(3);
+            outdate = input.get(4);
+            weight = Integer.valueOf(input.get(5));
+            count = Integer.valueOf(input.get(6));
+            price = input.get(7);
+            won = input.get(8);
+            extra = input.get(10);
+            /*if (input.size() > 10) {
                 extra = input.get(10);
-            }
+            }*/
         } catch (NumberFormatException e) {
             //arrayListOf("코드", "원산지", "품종", "수입날짜", "반입날짜", "중량", "수량", "단가", "금액","비고")
 
             // 첫번째 요소가 int로 변환 불가능한 경우
-            code = input.get(0);
+            /*code = input.get(0);
             origin = input.get(1);
             cultivar = input.get(2);
             indate = input.get(3);
@@ -159,3 +159,4 @@ public class OCRTable {
         this.extra = extra;
     }
 }
+

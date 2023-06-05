@@ -9,7 +9,48 @@ import com.example.camerakt.ListDialog
 import com.example.camerakt.databinding.RowItemBinding
 import com.example.camerakt.viewmodel.ListViewModel
 
-class TableAdapter(internal val data: ArrayList<ArrayList<String>>, private val listViewModel: ListViewModel) :
+/*
+class ContactListAdapter : ListAdapter<Contract, ContractListAdapter.ViewHolder>(diffUtil) {
+    //private lateinit var binding: ContactItemBinding
+    inner class ViewHolder(private val binding: ItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(contract: Contract) {
+            binding.codeView.text = contract.code
+            binding.originView.text = contract.orgin
+            binding.cultivarView.text = contract.cultival
+        }
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(currentList[position])
+    }
+
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<Contract>() {
+            override fun areItemsTheSame(oldItem: Contract, newItem: Contract): Boolean {
+                return oldItem.code == newItem.code
+            }
+
+            override fun areContentsTheSame(oldItem: Contract, newItem: Contract): Boolean {
+                return oldItem.orgin == newItem.orgin
+            }
+        }
+    }
+}*/
+
+
+class TableAdapter(
+    internal val data: ArrayList<ArrayList<String>>,
+    private val listViewModel: ListViewModel
+) :
+//private lateinit var binding: ContactItemBinding
+
+
     RecyclerView.Adapter<TableAdapter.ViewHolder>() {
 
     //findByView 지양  binding으로 초기화
@@ -30,7 +71,10 @@ class TableAdapter(internal val data: ArrayList<ArrayList<String>>, private val 
 //            val dialog = ListDialog(row) , position을 생성자로 전달해서 dialog를 거쳐 fragment로 전달
             val dialog = ListDialog(row, position, listViewModel)
             Log.d("click", "$dialog 입니다")
-            dialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "list_dialog")
+            dialog.show(
+                (holder.itemView.context as AppCompatActivity).supportFragmentManager,
+                "list_dialog"
+            )
 
 //            listViewModel.editRowData.value = row
         } // 선택한 열을
@@ -42,7 +86,8 @@ class TableAdapter(internal val data: ArrayList<ArrayList<String>>, private val 
 
     // 내부 뷰 홀더 클래스
     // viewHolder라는 템플릿을 처음에 생성하고 data.size 개수 만큼 반복해서 재활용 -> 방향에따라서 재사용해서 붙인다는 느낌
-    inner class ViewHolder(private val binding: RowItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RowItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         //        private val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
         fun bind(row: ArrayList<String>) {
             // 독립적으로 작동 ?
