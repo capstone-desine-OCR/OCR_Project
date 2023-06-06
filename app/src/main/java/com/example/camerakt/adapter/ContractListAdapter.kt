@@ -4,9 +4,11 @@ import android.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.camerakt.Dialog
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.databinding.ItemBinding
 
@@ -51,7 +53,15 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
 
             binding.detail.setOnClickListener() {
                 Log.d("확인", "상세보기 버튼 : ${contract.code}")
-                //removeContract(contract)
+                //val dialog = Dialog(contract)
+                //dialog.show()
+                val dialog = Dialog(contract)
+                dialog.show(
+                    (binding.root.context as AppCompatActivity).supportFragmentManager,
+                    "dialog_tag"
+                )
+                //dialog.show(requireFragmentManager(), "dialog_tag")
+
             }
         }
     }
