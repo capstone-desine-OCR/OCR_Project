@@ -103,32 +103,5 @@ class TableAdapter(
             binding.listWon.text = row[8]
             binding.listExtra.text = row[9]
         }
-
-//        private fun showEditDialog(view: View, index: Int) {
-//            // 클릭된 칸에 대한 정보를 가져옴
-//            val item = data[adapterPosition][index]
-//
-//            // 다이얼로그 생성
-//            val editText = EditText(view.context)
-//            editText.setText(item)
-//            val dialog = AlertDialog.Builder(view.context)
-//                .setTitle("Edit Item")
-//                .setView(editText)
-//                .setPositiveButton("Save") { dialog, which ->
-//                    // 수정된 내용을 가져옴
-//                    val updatedItem = editText.text.toString()
-//                    val mutableData = data.toMutableList()
-//                    // data를 업데이트
-//                    data[adapterPosition][index] = updatedItem
-//                    // RecyclerView를 업데이트
-//                    notifyItemChanged(adapterPosition)
-//                }
-//                .setNegativeButton("Cancel", null)
-//                .create()
-//
-//            dialog.show()
-//        }
-
-
     }
 }

@@ -3,9 +3,10 @@ package com.example.camerakt.database.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class OCRTable {
-    private int num;
+    //    private int num;
     private String code;
     private String origin;
     private String cultivar;
@@ -20,7 +21,7 @@ public class OCRTable {
     public Map<String, Object> toMap() {
         Map<String, Object> productData = new HashMap<>();
 
-        productData.put("번호", num);
+//        productData.put("번호", num);
         productData.put("코드", code);
         productData.put("원산지", origin);
         productData.put("품종", cultivar);
@@ -52,7 +53,7 @@ public class OCRTable {
             count = Integer.valueOf(input.get(6));
             price = input.get(7);
             won = input.get(8);
-            extra = input.get(10);
+            extra = input.get(9);
             /*if (input.size() > 10) {
                 extra = input.get(10);
             }*/
@@ -61,9 +62,9 @@ public class OCRTable {
         }
     }
 
-    public void setNum(int num) {
-        this.num = num;
-    }
+//    public void setNum(int num) {
+//        this.num = num;
+//    }
 
     public String getCode() {
         return code;
@@ -143,6 +144,19 @@ public class OCRTable {
 
     public void setExtra(String extra) {
         this.extra = extra;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OCRTable ocrTable = (OCRTable) o;
+        return weight == ocrTable.weight && count == ocrTable.count && Objects.equals(code, ocrTable.code) && Objects.equals(origin, ocrTable.origin) && Objects.equals(cultivar, ocrTable.cultivar) && Objects.equals(indate, ocrTable.indate) && Objects.equals(outdate, ocrTable.outdate) && Objects.equals(price, ocrTable.price) && Objects.equals(won, ocrTable.won) && Objects.equals(extra, ocrTable.extra);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code, origin, cultivar, indate, outdate, weight, count, price, won, extra);
     }
 }
 

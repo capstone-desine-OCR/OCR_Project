@@ -14,7 +14,7 @@ class TableActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTableBinding
     private val ocrTableService: OCRTableService = OCRTableService()
-    private lateinit var dbList: List<OCRTable>
+    private lateinit var dbList: MutableList<OCRTable>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class TableActivity : AppCompatActivity() {
     }
 
     // table oncreate 초기화 용
-    private fun processData(dbList: List<OCRTable>) {
+    private fun processData(dbList: MutableList<OCRTable>) {
         Log.d("precessData", "들어왔나요?")
         val contractListAdapter = ContractListAdapter()
         contractListAdapter.submitList(dbList)
