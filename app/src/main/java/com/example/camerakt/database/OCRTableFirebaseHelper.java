@@ -37,25 +37,6 @@ public class OCRTableFirebaseHelper {
                 });
     }
 
-    // Read - 전체 문서 조회
-//    public List<OCRTable> getAllProducts() {
-//        List<OCRTable> result = new ArrayList<>();
-//
-//        productsCollection.get()
-//                .addOnSuccessListener(querySnapshot -> {
-//                    OCRTable ocr = new OCRTable();
-//                    for (DocumentSnapshot document : querySnapshot) {
-//                        Log.d("current ", document.getId() + " => " + document.getData());
-//                        documentToOCRTable(ocr, document);
-//                        result.add(ocr);
-//                    }
-//                })
-//                .addOnFailureListener(e -> {
-//                    Log.e("current", "Error getting products", e);
-//                });
-//
-//        return result;
-//    }
     public void getAllProducts(ProductCallBack callBack) {
 
         productsCollection.get()
@@ -74,8 +55,7 @@ public class OCRTableFirebaseHelper {
                     Log.e("current", "Error getting products", e);
                     callBack.onFailure(e);
                 });
-
-//        return result;
+        
     }
 
     // 개별 문서 조회

@@ -1,5 +1,6 @@
 package com.example.camerakt.adapter
 
+import android.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,12 +29,28 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
     inner class ViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(contract: OCRTable) {
-            binding.codeView.text = contract.code
-            binding.originView.text = contract.origin
-            binding.cultivarView.text = contract.cultivar
+            binding.code.text = contract.code
+            binding.origin.text = contract.origin
+            binding.cultivar.text = contract.cultivar
 
-            binding.Delete.setOnClickListener() {
-                Log.d("확인", "삭제버튼 : $contract.code")
+            binding.delete.setOnClickListener() {
+                val builder = AlertDialog.Builder(binding.root.context)
+                builder.setTitle("삭제")
+                builder.setMessage("[${contract.code}]를 삭제하시겠습니까?")
+                builder.setPositiveButton("확인") { dialog, which ->
+                    // 삭제 동작 수행
+                    Log.d("확인", "삭제버튼 : ${contract.code}")
+                    // removeContract(contract)
+                }
+                builder.setNegativeButton("취소") { dialog, which ->
+                    dialog.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
+            }
+
+            binding.detail.setOnClickListener() {
+                Log.d("확인", "상세보기 버튼 : ${contract.code}")
                 //removeContract(contract)
             }
         }
