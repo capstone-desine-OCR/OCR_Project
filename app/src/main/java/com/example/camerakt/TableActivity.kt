@@ -14,7 +14,10 @@ class TableActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTableBinding
     private val ocrTableService: OCRTableService = OCRTableService()
-    private lateinit var dbList: MutableList<OCRTable>
+
+    //    private lateinit var dbList: MutableList<OCRTable>
+//    private var dbList: MutableList<OCRTable> = mutableListOf()
+    private var dbList: MutableList<OCRTable>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,17 +31,17 @@ class TableActivity : AppCompatActivity() {
                 if (products != null) {
                     dbList = products
                     Log.d("check2", "callBack 받아옴")
-                    if (::dbList.isInitialized) {
-                        for (dataList in dbList) {
+                    dbList?.let { list ->
+                        for (dataList in list) {
                             Log.d(
                                 "callback 출력",
                                 " ${dataList.code}, ${dataList.origin}, ${dataList.cultivar}, ${dataList.indate}, ${dataList.outdate}, ${dataList.weight}, ${dataList.count}, ${dataList.won}, ${dataList.price}, ${dataList.extra}"
                             )
                         }
 
-                        if (dbList != null) {
+                        if (list.isNotEmpty()) {
                             Log.d("dbList", "들어오나요?")
-                            processData(dbList)
+                            processData(list)
                         }
                     }
                 }

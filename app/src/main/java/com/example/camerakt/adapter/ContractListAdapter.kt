@@ -30,10 +30,17 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
 
     inner class ViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+
         fun bind(contract: OCRTable, position: Int) {
+
             binding.code.text = contract.code
             binding.origin.text = contract.origin
             binding.cultivar.text = contract.cultivar
+
+            // 여기서 position 값이 고정되어 전달된다.
+            // 1. 삭제시 다시 activity로 가서 전체 리스트를 붙이는 방법
+            // 2. position을 동적으로 변경할 수 있는 방법을 생각해볼 것 removeItem
 
             binding.delete.setOnClickListener() {
                 Log.d("delete 버튼 position", "$position")
@@ -64,12 +71,12 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
 
     fun removeItem(position: Int) {
         val newList = currentList.toMutableList()
-        for (new in newList)
-            Log.d("removeItem-new", "${new.code} 입니다")
+//        for (new in newList)
+//            Log.d("removeItem-new", "${new.code} 입니다")
         newList.removeAt(position)
-        Log.d("삭제", "삭제후")
-        for (new in newList)
-            Log.d("removeItem-new", "${new.code} 입니다")
+        Log.d("삭제", "삭제 ${newList[position].code}")
+//        for (new in newList)
+//            Log.d("removeItem-new", "${new.code} 입니다")
 
         submitList(newList)
         Log.d("submitList 동작", "submitList 동작")
