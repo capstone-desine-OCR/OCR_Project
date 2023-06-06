@@ -3,6 +3,7 @@ package com.example.camerakt
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.camerakt.adapter.ContractListAdapter
 import com.example.camerakt.database.callback.ProductCallBack
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.database.service.OCRTableService
@@ -27,13 +28,19 @@ class TableActivity : AppCompatActivity() {
                 if (products != null) {
                     dbList = products
                     Log.d("check2", "callBack 받아옴")
-                    for (dataList in dbList) {
-                        Log.d(
-                            "callback 출력",
-                            " ${dataList.code}, ${dataList.origin}, ${dataList.cultivar}, ${dataList.indate}, ${dataList.outdate}, ${dataList.weight}, ${dataList.count}, ${dataList.won}, ${dataList.price}, ${dataList.extra}"
-                        )
+                    if (::dbList.isInitialized) {
+                        for (dataList in dbList) {
+                            Log.d(
+                                "callback 출력",
+                                " ${dataList.code}, ${dataList.origin}, ${dataList.cultivar}, ${dataList.indate}, ${dataList.outdate}, ${dataList.weight}, ${dataList.count}, ${dataList.won}, ${dataList.price}, ${dataList.extra}"
+                            )
+                        }
+
+                        if (dbList != null) {
+                            Log.d("dbList", "들어오나요?")
+                            processData(dbList)
+                        }
                     }
-                    processData()
                 }
             }
 
@@ -46,15 +53,17 @@ class TableActivity : AppCompatActivity() {
     }
 
     // table oncreate 초기화 용
-    private fun processData() {
-        // dbList 사용 가능한 위치에서 데이터 처리
-        if (::dbList.isInitialized) {
-            for (dataList in dbList) {
-                Log.d(
-                    "onCreate 초기화",
-                    "${dataList.code}, ${dataList.count},${dataList.cultivar}, ${dataList.extra}, ${dataList.indate}, ${dataList.origin}, ${dataList.outdate}, ${dataList.price}, ${dataList.weight},${dataList.won} "
-                )
-            }
-        }
+    private fun processData(dbList: List<OCRTable>) {
+        Log.d("precessData", "들어왔나요?")
+        val contractListAdapter = ContractListAdapter()
+        contractListAdapter.submitList(dbList)
+        binding.recyclerView.adapter = contractListAdapter
+        Log.d("precessData", "지나갔나요?")
+//            for (dataList in dbList) {
+//                Log.d(
+//                    "onCreate 초기화",
+//                    "${dataList.code}, ${dataList.count},${dataList.cultivar}, ${dataList.extra}, ${dataList.indate}, ${dataList.origin}, ${dataList.outdate}, ${dataList.price}, ${dataList.weight},${dataList.won} "
+//                )
+//            }
     }
 }

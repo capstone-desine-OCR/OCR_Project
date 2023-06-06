@@ -4,15 +4,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.camerakt.databinding.ActivityMainBinding
-import com.example.camerakt.viewmodel.Contract
 import com.example.myocr.util.MyEncoder
-import com.example.myocr.viewmodel.MyViewModel
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 
@@ -30,13 +25,11 @@ class MainActivity : AppCompatActivity() {
     var data: String? = null
 
     // 뷰 모델
-    private val viewModel: MyViewModel by viewModels()
+//    private val viewModel: MyViewModel by viewModels()
 
     // 뷰 바인딩 : 메인 액티비티 -> 액티비티메인
     private lateinit var binding: ActivityMainBinding
 
-
-    var contracts = ArrayList<Contract>()
 
     //private lateinit var db : DatabaseHelper
     // 메인
@@ -52,15 +45,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val myViewModel: MyViewModel = ViewModelProvider(this).get(MyViewModel::class.java) //
+//        val myViewModel: MyViewModel = ViewModelProvider(this).get(MyViewModel::class.java) //
 
         // Obserber 객체 생성 : 뷰 모델이 데이터를 전달하기 위해 필요함
-        val nameObserver = Observer<java.lang.StringBuilder> {
+//        val nameObserver = Observer<java.lang.StringBuilder> {
 //            binding.textView.text = it
-        }
+//        }
 
         // LifecycleOwner(이 코드에서는 액티비티에 해당)와 Observer객체를 넣어 LiveData 관찰
-        myViewModel.liveData_String.observe(this, nameObserver)
+//        myViewModel.liveData_String.observe(this, nameObserver)
 
         setPermission() // 앱 시작할때 권한 체크하는 메소드 수행
 

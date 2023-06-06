@@ -23,8 +23,8 @@ class SelectActivity : AppCompatActivity() {
         val contracts = intent.extras?.getSerializable("contracts") as? ArrayList<Contract>
         Log.d("받아옴", "확인:${contracts.toString()}")
         val contractListAdapter = ContractListAdapter()
-        contractListAdapter.submitList(contracts)
-        binding.recyclerView.adapter = contractListAdapter
+//        contractListAdapter.submitList(contracts)
+//        binding.recyclerView.adapter = contractListAdapter
 
     }
 }
