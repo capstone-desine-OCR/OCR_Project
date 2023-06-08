@@ -14,6 +14,7 @@ import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.databinding.ItemBinding
 
 
+// ListAdapter - diffutil로 구성하는 것이 화면 변화시키는 데에 더 효율적
 class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHolder>(diffUtil) {
     private val ocrTableService: OCRTableService = OCRTableService()
 
@@ -29,11 +30,15 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(currentList[position])
+
+        // position은 처음 adapter를 붙일때 같이 붙게 되나보다.
         holder.itemView.setOnClickListener {
             Log.d("click", "목록의 $position 입니다")
         }
     }
 
+
+    // ViewHolder 는 목록 1 줄임-> 여러 목록을 ViewHolder 1칸으로 재사용하는 것
     inner class ViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -43,13 +48,10 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
             binding.origin.text = contract.origin
             binding.cultivar.text = contract.cultivar
 
-            // 여기서 position 값이 고정되어 전달된다.
-            // 1. 삭제시 다시 activity로 가서 전체 리스트를 붙이는 방법
-            // 2. position을 동적으로 변경할 수 있는 방법을 생각해볼 것 removeItem
-
+            // getAdapterPosition() -> deprecated
+            // getBindingAdapterPosition() 써야한다고 나오는데 여기서는 쓸 수가 없다.
             binding.delete.setOnClickListener() {
                 Log.d("delete 버튼 position", "$adapterPosition")
-
 
                 val builder = AlertDialog.Builder(binding.root.context)
 
@@ -58,7 +60,10 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
                 builder.setPositiveButton("확인") { dialog, which ->
                     // 삭제 동작 수행
                     Log.d("확인", "삭제버튼 : ${contract.code}")
+
+                    // 1. db 상에서 삭제
                     ocrTableService.deleteProduct(contract.code)
+                    // 2. 화면단에서 목록 삭제 초기화 -> submitList()
                     removeItem(adapterPosition)
                 }
 
@@ -71,20 +76,18 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
 
             binding.detail.setOnClickListener() {
                 Log.d("확인", "상세보기 버튼 : ${contract.code}")
-                //val dialog = Dialog(contract)
-                //dialog.show()
                 val dialog = TableDialog(contract)
                 dialog.show(
                     (binding.root.context as AppCompatActivity).supportFragmentManager,
                     "dialog_tag"
                 )
-                //dialog.show(requireFragmentManager(), "dialog_tag")
 
             }
         }
     }
 
     fun removeItem(position: Int) {
+
         val newList = currentList.toMutableList()
 //        for (new in newList)
 //            Log.d("removeItem-new", "${new.code} 입니다")
@@ -106,23 +109,25 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<OCRTable>() {
 
+            //diffUtil
+
             //두 아이템이 같은 객체인지 여부를 반환한다. (고유값,ID,해쉬값)
             override fun areItemsTheSame(oldItem: OCRTable, newItem: OCRTable): Boolean {
                 Log.d(
                     "areItemsTheSame",
                     "oldItem-code : ${oldItem.code} / newItem-code : ${newItem.code} / ${oldItem === newItem}"
                 )
-                // kotlin 주소값 비교 === <-> java ==
+                // kotlin 주소값 비교 === <-> java 참조값 비교 == 동일
                 return oldItem === newItem
             }
 
-            //두 아이템이 같은 데이터를 갖고 있는지 여부를 반환한다.
+            //두 아이템이 같은 데이터를 갖고 있는지 여부를 반환한다. -> UI 변경용
             override fun areContentsTheSame(oldItem: OCRTable, newItem: OCRTable): Boolean {
                 Log.d(
                     "areContentsTheSame",
                     "oldItem-code : ${oldItem.code} / newItem-code : ${newItem.code} / ${oldItem == newItem}"
                 )
-                // 값
+                // 객체 값 비교 java equals -> (ocrTable equals , hashcode 구현해줘야 할 것 같았다)
                 return oldItem == newItem
             }
         }
