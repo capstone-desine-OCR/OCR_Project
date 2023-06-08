@@ -37,6 +37,7 @@ public class OCRTableFirebaseHelper {
                 });
     }
 
+    // firebase가 비동기 방식이라고 해서 callback을 통해 tableActivity oncreate으로
     public void getAllProducts(ProductCallBack callBack) {
 
         productsCollection.get()
@@ -55,7 +56,7 @@ public class OCRTableFirebaseHelper {
                     Log.e("current", "Error getting products", e);
                     callBack.onFailure(e);
                 });
-        
+
     }
 
     // 개별 문서 조회

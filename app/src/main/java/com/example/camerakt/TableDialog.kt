@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.databinding.DialogBinding
 
-class Dialog(
+class TableDialog(
     private val row: OCRTable
 ) : DialogFragment() {
     private lateinit var binding: DialogBinding

@@ -3,11 +3,12 @@ package com.example.camerakt.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.camerakt.Dialog
+import com.example.camerakt.TableDialog
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.databinding.ItemBinding
@@ -27,14 +28,16 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(currentList[position], position)
+        holder.bind(currentList[position])
+        holder.itemView.setOnClickListener {
+            Log.d("click", "목록의 $position 입니다")
+        }
     }
 
     inner class ViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
-        fun bind(contract: OCRTable, position: Int) {
+        fun bind(contract: OCRTable) {
 
             binding.code.text = contract.code
             binding.origin.text = contract.origin
@@ -45,30 +48,32 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
             // 2. position을 동적으로 변경할 수 있는 방법을 생각해볼 것 removeItem
 
             binding.delete.setOnClickListener() {
-                Log.d("delete 버튼 position", "$position")
-                removeItem(position)
-//                val builder = AlertDialog.Builder(binding.root.context)
-//
-//                builder.setTitle("삭제")
-//                builder.setMessage("[${contract.code}]를 삭제하시겠습니까?")
-//                builder.setPositiveButton("확인") { dialog, which ->
-//                    // 삭제 동작 수행
-//                    Log.d("확인", "삭제버튼 : ${contract.code}")
-//                    ocrTableService.deleteProduct(contract.code)
-//
-//                }
-//                builder.setNegativeButton("취소") { dialog, which ->
-//                    dialog.dismiss()
-//                }
-//                val dialog = builder.create()
-//                dialog.show()
+                Log.d("delete 버튼 position", "$adapterPosition")
+
+
+                val builder = AlertDialog.Builder(binding.root.context)
+
+                builder.setTitle("삭제")
+                builder.setMessage("[${contract.code}]를 삭제하시겠습니까?")
+                builder.setPositiveButton("확인") { dialog, which ->
+                    // 삭제 동작 수행
+                    Log.d("확인", "삭제버튼 : ${contract.code}")
+                    ocrTableService.deleteProduct(contract.code)
+                    removeItem(adapterPosition)
+                }
+
+                builder.setNegativeButton("취소") { dialog, which ->
+                    dialog.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
             }
 
             binding.detail.setOnClickListener() {
                 Log.d("확인", "상세보기 버튼 : ${contract.code}")
                 //val dialog = Dialog(contract)
                 //dialog.show()
-                val dialog = Dialog(contract)
+                val dialog = TableDialog(contract)
                 dialog.show(
                     (binding.root.context as AppCompatActivity).supportFragmentManager,
                     "dialog_tag"
@@ -83,10 +88,15 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
         val newList = currentList.toMutableList()
 //        for (new in newList)
 //            Log.d("removeItem-new", "${new.code} 입니다")
+        Log.d("삭제 위치", "삭제 위치 :$position 입니다.")
+        Log.d("삭제  code", "삭제  code : ${newList[position].code} 입니다.")
+
         newList.removeAt(position)
-        Log.d("삭제", "삭제 ${newList[position].code}")
-//        for (new in newList)
-//            Log.d("removeItem-new", "${new.code} 입니다")
+//        Log.d("삭제 이후 위치", "삭제 이후 위치 :$position 입니다.")
+//        Log.d("현재 삭제 위치", "삭제 이후 위치 code: ${newList[position].code}")
+
+        for (new in newList)
+            Log.d("변경 이후 목록", "${new.code} 입니다")
 
         submitList(newList)
         Log.d("submitList 동작", "submitList 동작")

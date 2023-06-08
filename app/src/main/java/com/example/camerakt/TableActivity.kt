@@ -40,10 +40,12 @@ class TableActivity : AppCompatActivity() {
                         }
 
                         if (list.isNotEmpty()) {
-                            Log.d("dbList", "들어오나요?")
+                            Log.d("getAllProducts-dbList", "dbList 존재")
                             processData(list)
                         }
                     }
+                } else {
+                    // 비어있을 경우 logic
                 }
             }
 
@@ -57,16 +59,12 @@ class TableActivity : AppCompatActivity() {
 
     // table oncreate 초기화 용
     private fun processData(dbList: MutableList<OCRTable>) {
-        Log.d("precessData", "들어왔나요?")
+        Log.d("precessData", "precessData")
+
         val contractListAdapter = ContractListAdapter()
-        contractListAdapter.submitList(dbList)
+        contractListAdapter.submitList(dbList) // adapter에 받아온 dbList를 반영함
         binding.recyclerView.adapter = contractListAdapter
-        Log.d("precessData", "지나갔나요?")
-//            for (dataList in dbList) {
-//                Log.d(
-//                    "onCreate 초기화",
-//                    "${dataList.code}, ${dataList.count},${dataList.cultivar}, ${dataList.extra}, ${dataList.indate}, ${dataList.origin}, ${dataList.outdate}, ${dataList.price}, ${dataList.weight},${dataList.won} "
-//                )
-//            }
+        Log.d("precessData", "contractListAdapter 붙임")
+
     }
 }
