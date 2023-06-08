@@ -25,8 +25,28 @@ class ListViewModel : ViewModel() {
     fun setInferred(data: String, context: Context) {
         repository.getResult(data) // 데이터를 가져오고
 
+        val result = ArrayList<ArrayList<String>>()
+
         repository.lineReturn = {
-            listTableData.value = it  // ArrayList<ArrayList<String>>> MutableLiveData로 담아서 obsever가 인식할 수 있도록 view로 던짐
+
+            for (current in it) {
+                var add_result = ArrayList<String>()
+                if (current.first().contains("번호")) {
+                    continue
+                } else {
+                    try {
+                        Integer.valueOf(current.first())
+                    } catch (e: NumberFormatException) {
+                        result.add(current)
+                        continue
+                    }
+                    current.remove(current.first())
+                    result.add(current)
+                }
+            }
+
+            listTableData.value =
+                result  // ArrayList<ArrayList<String>>> MutableLiveData로 담아서 obsever가 인식할 수 있도록 view로 던짐
         }
     }
 }
