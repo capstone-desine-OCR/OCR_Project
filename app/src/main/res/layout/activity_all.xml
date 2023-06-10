@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<!--
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:background="@color/material_dynamic_neutral90"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:background="@color/material_dynamic_neutral90"
 
-        app:onClick="onBackPressed"
-        >
+            app:onClick="onBackPressed"
+            >
 
 
-    </androidx.appcompat.widget.Toolbar> -->
+        </androidx.appcompat.widget.Toolbar> -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        >
+        android:layout_weight="5">
 
         <TextView
             android:id="@+id/textView2"
@@ -32,24 +30,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
         android:layout_weight="1"
-        >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#008D62"
             android:text="재촬영하기" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#008D62"
             android:text="수정하기" />
 
 

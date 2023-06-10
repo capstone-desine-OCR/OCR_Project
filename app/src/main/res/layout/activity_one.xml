@@ -1,60 +1,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context=".OneActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".OneActivity">
 
     <TextView
-            android:id="@+id/text_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:text="개별 입력"
-            android:textSize="48sp"/>
+        android:id="@+id/text_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="개별 입력"
+        android:textSize="48sp" />
 
     <FrameLayout
-            android:id="@+id/fragment_container_one"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-    >
+        android:id="@+id/fragment_container_one"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
 
         <ImageView
-                android:id="@+id/one_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:maxWidth="200dp"
-                android:maxHeight="200dp"
-                tools:srcCompat="@tools:sample/avatars"/>
+            android:id="@+id/one_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:maxWidth="200dp"
+            android:maxHeight="200dp"
+            tools:srcCompat="@tools:sample/avatars" />
     </FrameLayout>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_camera_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:backgroundTint="#008D62"
+            android:text="@string/takePicture" />
 
         <Button
-                android:id="@+id/btn_camera_one"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                android:layout_weight="1"
-                android:text="@string/takePicture"/>
-
-        <Button
-                android:id="@+id/btn_ocr_one"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                android:layout_weight="1"
-                android:text="@string/recognition"/>
+            android:id="@+id/btn_ocr_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#008D62"
+            android:text="@string/recognition" />
     </LinearLayout>
 
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@android:color/white"
-             tools:context=".ListOcrFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ListOcrFragment">
 
 
     <!--    <TextView-->
@@ -15,32 +15,33 @@
 
 
     <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0">
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
     </HorizontalScrollView>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            android:gravity="center">
-        
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <Button
-                android:id="@+id/btn_save"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="10dp"
-                android:text="@string/save"/>
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#008D62"
+            android:text="@string/save" />
     </LinearLayout>
 
 </FrameLayout>

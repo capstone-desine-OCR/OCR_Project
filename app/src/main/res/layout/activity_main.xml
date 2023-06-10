@@ -1,33 +1,50 @@
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        tools:context=".MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:drawableRight="@drawable/drawable_resize"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/chab"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="10dp"
+        android:text="찰칵! 저장"
+        android:textSize="40sp" />
 
     <Button
-            android:id="@+id/btn_table"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:text="Table"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+        android:id="@+id/btn_table"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#008D62"
+        android:text="Table" />
 
     <Button
-            android:id="@+id/btn_list"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:text="목록 입력"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+        android:id="@+id/btn_list"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#008D62"
+        android:text="목록 입력" />
 
     <Button
-            android:id="@+id/btn_one"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:text="개별 입력"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+        android:id="@+id/btn_one"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#008D62"
+        android:text="개별 입력" />
 
 </LinearLayout>
