@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -106,6 +107,7 @@ class ListOcrFragment : Fragment() {
                     ocrTableService.addProduct(current_ocr)
                 }
             }
+            Toast.makeText(requireContext(), "저장되었습니다", Toast.LENGTH_SHORT).show()
             // fragment - 종속된 activity 같이 종료 -> mainActivity로?
             requireActivity().finish()
 

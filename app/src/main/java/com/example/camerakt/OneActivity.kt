@@ -143,5 +143,24 @@ class OneActivity : AppCompatActivity() {
         }
     }
 
+    // oneActivity에서 인식 오류 시 clearImage=true 설정, OneActivity로 돌아옴
+    // 이전에 촬영한 이미지 삭제
+    private fun clearImage() {
+        val imageView = binding.oneImage
+        imageView.setImageDrawable(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (OneActivity.clearImage) {
+            clearImage()
+            OneActivity.clearImage = false // 플래그 초기화
+        }
+    }
+
+    companion object {
+        var clearImage: Boolean = false
+    }
+
 
 }

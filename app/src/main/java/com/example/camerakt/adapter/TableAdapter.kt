@@ -54,15 +54,17 @@ class TableAdapter(
     RecyclerView.Adapter<TableAdapter.ViewHolder>() {
 
     //findByView 지양  binding으로 초기화
+    // onCreateViewHolder: 한 화면에 그려지는 아이템 개수만큼 레이아웃 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableAdapter.ViewHolder {
         val binding = RowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     //0~ data.size가 position으로 들어옴 RecyclerView이 매단계마다 onBindViewHolder를 불러서 ArrayList<String> 불러옴
+    // onBindViewHolder: 생성된 아이템 레이아웃에 값 입력 후 목록에 출력(생성된 뷰홀더를 화면에 보여줌)
     override fun onBindViewHolder(holder: TableAdapter.ViewHolder, position: Int) {
         val row = data[position]
-        holder.bind(row)
+        holder.bind(row) //bind: 화면에 데이터를 세팅하는 함수
 
         holder.itemView.setOnClickListener {
             Log.d("click", "$row ")
@@ -81,15 +83,15 @@ class TableAdapter(
     }
 
     //ArrayList<String> 총 개수
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = data.size //목록에 보여질 아이템의 개수
 
 
     // 내부 뷰 홀더 클래스
     // viewHolder라는 템플릿을 처음에 생성하고 data.size 개수 만큼 반복해서 재활용 -> 방향에따라서 재사용해서 붙인다는 느낌
-    inner class ViewHolder(private val binding: RowItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: RowItemBinding) : RecyclerView.ViewHolder(binding.root) {
         //        private val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
         fun bind(row: ArrayList<String>) {
+
             // 독립적으로 작동 ?
 //            binding.listNumber.text = row[0]
             binding.listCode.text = row[0]

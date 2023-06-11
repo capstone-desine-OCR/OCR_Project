@@ -97,6 +97,8 @@ class OneOcrFragment : Fragment() {
 
                 requireActivity().finish()
             }
+            Toast.makeText(requireContext(), "저장되었습니다", Toast.LENGTH_SHORT).show()
+
 
         }
 

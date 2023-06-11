@@ -38,16 +38,19 @@ class ListActivity : AppCompatActivity() {
     // by viewModels() : 독립적인 수명주기를 가질 수 있도록 한다.
     private val listViewModel: ListViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         //onActivityResult 의 결과 listBitMapLiveData 변경 감지 -> 화면에 나타나도록 함 = 데이터 유지
         listViewModel.listBitMapLiveData.observe(this) // this : listActivity
         { bitmap -> binding.listImage.setImageBitmap(bitmap) }
+
 
 
         binding.btnCameraList.setOnClickListener {
@@ -85,6 +88,7 @@ class ListActivity : AppCompatActivity() {
                 Log.d("empty Image", "이미지 존재하지 않음")
             }
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -128,6 +132,7 @@ class ListActivity : AppCompatActivity() {
 
     // 사진을 찍은 결과값을 listViewModel 의 listBitMapLiveData 의 변화감지 data로 설정
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         Log.d("CHECK1", "여기까지 전달이 되나?")
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -141,14 +146,19 @@ class ListActivity : AppCompatActivity() {
 
             Log.d("CHECK3", "여기까지 전달이 되나?")
 //            binding.listImage.setImageBitmap(bitmap)
-            listViewModel.listBitMapLiveData.value = bitmap  // 이미지 뷰에 bitmap을 저장후 -> observer로 재 갱신???
+            listViewModel.listBitMapLiveData.value =
+                bitmap  // 이미지 뷰에 bitmap을 저장후 -> observer로 재 갱신???
 
             Log.d("CHECK4", "여기까지 전달이 되나?")
             CameraUtil.savePhoto(this, bitmap)
         }
     }
 
-//
+    // ListActivity에서 인식 오류 시 clearImage=true 설정, ListActivity로 돌아옴
+    private fun clearImage() {
+        val imageView = binding.listImage
+        imageView.setImageDrawable(null)
+    }
 
 
     override fun onStart() {
@@ -159,7 +169,12 @@ class ListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.d("listActivity", "onResume List")
+        if (clearImage) {
+            clearImage()
+            clearImage = false // 플래그 초기화
+        }
     }
+
 
     override fun onPause() {
         super.onPause()
@@ -180,5 +195,10 @@ class ListActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d("listActivity", "onDestroy List")
     }
+
+    companion object {
+        var clearImage: Boolean = false
+    }
+
 
 }
