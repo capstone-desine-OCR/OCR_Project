@@ -68,7 +68,7 @@ class ListViewModel : ViewModel() {
 
             for (current in it) {
                 var add_result = ArrayList<String>()
-                if (current.first().contains("번호")) {
+                if (current.first().contains("코드")) {
                     continue
                 } else {
                     try {
