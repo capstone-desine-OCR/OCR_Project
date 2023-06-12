@@ -22,13 +22,16 @@ class OneViewModel : ViewModel() {
     val oneBitMapLiveData: MutableLiveData<Bitmap> = MutableLiveData()
 
     var oneTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
+
+    val visibilityData: MutableLiveData<Pair<Boolean, Boolean>> = MutableLiveData()
+
     val oneTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = oneTableData
 
     val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
 
     private val ocrTableService: OCRTableService = OCRTableService()
 
-    //오류 인식 -> ListActivity로 돌아감
+    //fragment에서 오류 인식 -> 오류 인식 -> oneActivity로 돌아감
     fun handleRecognitionError(context: Context) {
         val fragmentManager = (context as AppCompatActivity).supportFragmentManager
         fragmentManager.beginTransaction()
@@ -39,13 +42,14 @@ class OneViewModel : ViewModel() {
             .setTitle("인식 오류")
             .setMessage(
                 "사진이 흔들렸거나 템플릿 양식이 올바르지 않습니다.\n" +
-                        " 올바르게 입력 후 재촬영 해주세요."
+                        "올바르게 입력 후 재촬영 해주세요."
             )
             .setPositiveButton("확인") { dialog, _ ->
                 dialog.dismiss()
                 val intent = Intent(context, OneActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 OneActivity.clearImage = true
+                visibilityData.value = Pair(true, true)
                 context.startActivity(intent)
             }
             .create()
@@ -134,6 +138,7 @@ class OneViewModel : ViewModel() {
                     name = currentRow[j]
 
                     // 열 이름이 "코드", "원산지", "품종"...중에 하나라도 해당하지 않는 경우, 즉 잘못된 템플릿을 인식 시킨 경우
+                    Log.d("name", name)
                     val recognitionError = nameCheck(name)
                     if (recognitionError == false) {
                         productData.clear()
@@ -213,7 +218,7 @@ class OneViewModel : ViewModel() {
     }
 
     fun nameCheck(name: String): Boolean {
-        
+
         val validNames = listOf(
             "코드", "원산지", "품종", "반입날짜", "수입날짜",
             "중량", "수량", "금액", "비고", "단가"

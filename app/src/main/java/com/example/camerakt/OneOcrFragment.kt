@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,6 +16,7 @@ import com.example.camerakt.util.Variable
 import com.example.camerakt.viewmodel.OneViewModel
 
 class OneOcrFragment : Fragment() {
+    private lateinit var progressBar: ProgressBar
 
     // activityViewModel : activity 에서 생성된 특정 viewModel(ListViewModel) 을 공유할 수 있다 = fragment viewModel의 생명주기는 activity에 종속되어있음
     // viewModel liveData의 변경사항을 activity에서도 observe 할수 있고 , fragment에서도 observe 할 수 있다.
@@ -48,8 +50,18 @@ class OneOcrFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnSave.isEnabled = false
+
+        progressBar = binding.progressBar
+        progressBar.isIndeterminate = true
+
+        // 액티비티의 뷰를 참조
+
+
         oneViewModel.oneTableData.observe(viewLifecycleOwner) { data ->
             Log.d("data", "data : $data")
+
+
             if (data.size != 0) {
                 val oneList: ArrayList<String> = data[1]
                 Log.d("oneList", "oneList : $oneList")
@@ -63,13 +75,19 @@ class OneOcrFragment : Fragment() {
                 binding.priceEditText.setText(oneList[7])
                 binding.wonEditText.setText(oneList[8])
                 binding.exrtaEditText.setText(oneList[9])
+
+                binding.btnSave.isEnabled = true // 저장버튼 활성화
             }
+
+            progressBar.visibility = View.GONE
+
 
         }
 
 
         binding.btnSave.setOnClickListener {
             Log.d("btn_save", "one_click")
+
 
             val modifiedRow = ArrayList<String>().apply {
                 add(binding.codeEditText.text.toString())
@@ -89,23 +107,24 @@ class OneOcrFragment : Fragment() {
             }
             val current_ocr = OCRTable()
 
+
             if (modifiedRow.contains(Variable.RECOGNITION_ERROR)) {
                 Toast.makeText(requireContext(), Variable.OCRBTN_TOAST, Toast.LENGTH_SHORT).show()
             } else {
                 current_ocr.fromList(modifiedRow)
                 ocrTableService.addProduct(current_ocr)
-
+                Toast.makeText(requireContext(), "저장되었습니다", Toast.LENGTH_SHORT).show()
                 requireActivity().finish()
             }
-            Toast.makeText(requireContext(), "저장되었습니다", Toast.LENGTH_SHORT).show()
-
 
         }
 
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

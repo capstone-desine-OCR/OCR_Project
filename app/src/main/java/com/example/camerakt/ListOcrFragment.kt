@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,6 +18,10 @@ import com.example.camerakt.databinding.FragmentListOcrBinding
 import com.example.camerakt.viewmodel.ListViewModel
 
 class ListOcrFragment : Fragment() {
+
+    // ocr을 통해 결과 값을 받아올 때까지 표시될 프로그래스바
+    private lateinit var progressBar: ProgressBar
+
 
     // activityViewModel : activity 에서 생성된 특정 viewModel(ListViewModel) 을 공유할 수 있다 = fragment viewModel의 생명주기는 activity에 종속되어있음
     // viewModel liveData의 변경사항을 activity에서도 observe 할수 있고 , fragment에서도 observe 할 수 있다.
@@ -38,6 +43,8 @@ class ListOcrFragment : Fragment() {
         // -> viewModel로 데이터 전달하는 것으로 교체
         arguments?.let {
         }
+
+
     }
 
     override fun onCreateView(
@@ -53,6 +60,11 @@ class ListOcrFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnSave.isEnabled = false
+
+        progressBar = binding.progressBar
+        progressBar.visibility = View.VISIBLE
 
         // requireContext() : Activity -> fragment 로 주는 context
         // RecyclerView 를 어떻게 배치할지 : 선형배치 방식으로!
@@ -70,6 +82,10 @@ class ListOcrFragment : Fragment() {
             adapter = TableAdapter(data, listViewModel)
             binding.recyclerView.adapter =
                 adapter // recyclerView 로 adapter 를 붙여주는 것 -> ViewHolder를 붙여주는 것
+
+            // 저장 버튼 활성화, 프로그래스바 감추기
+            binding.btnSave.isEnabled = true
+            progressBar.visibility = View.GONE
         }
 
 

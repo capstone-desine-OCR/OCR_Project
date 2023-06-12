@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.ViewModelProvider
 import com.example.camerakt.databinding.ActivityOneBinding
 import com.example.camerakt.util.CameraUtil
 import com.example.camerakt.viewmodel.OneViewModel
@@ -25,6 +26,8 @@ import java.io.IOException
 class OneActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1 // 카메라 사진 촬영 요청 코드
     lateinit var curPhotoPath: String // 문자열 형태의 사진 경로 값
+    private var oneOcrFragment: OneOcrFragment? = null
+
 
     private lateinit var binding: ActivityOneBinding
 
@@ -41,11 +44,23 @@ class OneActivity : AppCompatActivity() {
         binding = ActivityOneBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val viewModel = ViewModelProvider(this).get(OneViewModel::class.java)
+
+        // showCameraButton을 관찰하고 버튼 가시성 조정
+        viewModel.visibilityData.observe(this, { visibilityPair ->
+            binding.btnCameraOne.visibility = if (visibilityPair.first) View.VISIBLE else View.GONE
+            binding.btnOcrOne.visibility = if (visibilityPair.second) View.VISIBLE else View.GONE
+        })
+
         oneViewModel.oneBitMapLiveData.observe(this) // this : oneActivity
         { bitmap -> binding.oneImage.setImageBitmap(bitmap) }
 
+
+
+
         binding.btnCameraOne.setOnClickListener {
             // list_Activity 의 frameLayOut 의 fragment 위치를 찾는 것
+            //oneOcrFragment?.clearEditTextFields()
             val currentFragment =
                 supportFragmentManager.findFragmentById(R.id.fragment_container_one)
             // fragment가 있다면..?
@@ -54,11 +69,16 @@ class OneActivity : AppCompatActivity() {
                     .remove(currentFragment)
                     .commit()
                 Log.d("btnCamera", "기존 fragment 삭제  ")
+
             }
+
+            Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show()
             takeCapture()  // 기본 카메라 앱을 실행하여 사진 촬영
         }
 
         binding.btnOcrOne.setOnClickListener {
+
+
             //onClick(it)
             if (binding.oneImage.drawable != null) {
 
@@ -74,11 +94,19 @@ class OneActivity : AppCompatActivity() {
                     //listActivity
                     transaction.replace(R.id.fragment_container_one, fragment)
                     transaction.commit()
+
+                    // ocr인식 버튼 클릭 시 촬영, 인식 버튼 프래그먼트 화면에서 안보이게 설정
+                    binding.btnCameraOne.visibility = View.GONE
+                    binding.btnOcrOne.visibility = View.GONE
+
+
                 }
             } else {
                 Toast.makeText(this, "oneImage가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
                 Log.d("empty Image", "이미지 존재하지 않음")
             }
+
+
         }
     }
 
@@ -156,6 +184,7 @@ class OneActivity : AppCompatActivity() {
             clearImage()
             OneActivity.clearImage = false // 플래그 초기화
         }
+
     }
 
     companion object {

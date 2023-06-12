@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.ViewModelProvider
 import com.example.camerakt.databinding.ActivityListBinding
 import com.example.camerakt.util.CameraUtil
 import com.example.camerakt.viewmodel.ListViewModel
@@ -45,6 +46,14 @@ class ListActivity : AppCompatActivity() {
 
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+
+
+        viewModel.visibilityData.observe(this, { visibilityPair ->
+            binding.btnCameraList.visibility = if (visibilityPair.first) View.VISIBLE else View.GONE
+            binding.btnOcrList.visibility = if (visibilityPair.second) View.VISIBLE else View.GONE
+        })
 
 
         //onActivityResult 의 결과 listBitMapLiveData 변경 감지 -> 화면에 나타나도록 함 = 데이터 유지
@@ -81,6 +90,10 @@ class ListActivity : AppCompatActivity() {
                 //listActivity
                 transaction.replace(R.id.fragment_container, fragment)
                 transaction.commit()
+
+                // ocr인식 버튼 클릭 시 촬영, 인식 버튼 프래그먼트 화면에서 안보이게 설정
+                binding.btnCameraList.visibility = View.GONE
+                binding.btnOcrList.visibility = View.GONE
 
                 onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영
             } else {

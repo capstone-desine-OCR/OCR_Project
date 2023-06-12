@@ -26,7 +26,10 @@ class ListViewModel : ViewModel() {
     // 2가지 값을 한번에 묶어서 전달할 수 있음
     val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
 
-    //오류 인식 -> ListActivity로 돌아감
+    // 촬영, ocr 인식 버튼 가시성에 사용
+    val visibilityData: MutableLiveData<Pair<Boolean, Boolean>> = MutableLiveData()
+
+    // fragment에서 오류 인식 -> ListActivity로 돌아감
     fun handleRecognitionError(context: Context) {
         val fragmentManager = (context as AppCompatActivity).supportFragmentManager
         fragmentManager.beginTransaction()
@@ -37,13 +40,14 @@ class ListViewModel : ViewModel() {
             .setTitle("인식 오류")
             .setMessage(
                 "사진이 흔들렸거나 템플릿 양식이 올바르지 않아 오류가 발생하였습니다." +
-                        " 재촬영 해주세요."
+                        "올바르게 입력 후 재촬영 해주세요."
             )
             .setPositiveButton("확인") { dialog, _ ->
                 dialog.dismiss()
                 val intent = Intent(context, ListActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 ListActivity.clearImage = true
+                visibilityData.value = Pair(true, true) // 촬영, ocr 인식 버튼이 보여지게
                 context.startActivity(intent)
             }
             .create()
