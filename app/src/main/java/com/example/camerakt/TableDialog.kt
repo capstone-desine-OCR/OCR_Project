@@ -10,25 +10,36 @@ import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.databinding.DialogBinding
 
 class TableDialog(
-    private val row: OCRTable
+    //private val row: OCRTable
 ) : DialogFragment() {
     private lateinit var binding: DialogBinding
+    private var row: OCRTable? = null
+
+    constructor(row: OCRTable) : this() {
+        this.row = row
+    }
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         Log.d("확인", "들어옴")
+        if (row == null) {
+            dismiss()
+            return super.onCreateDialog(savedInstanceState)
+        }
         binding = DialogBinding.inflate(LayoutInflater.from(context))
 
+        //binding = DialogBinding.inflate(LayoutInflater.from(context), null, false)
 
-        binding.textCode.text = row.code
-        binding.textOrigin.text = row.origin
-        binding.textCultivar.text = row.cultivar
-        binding.textIndate.text = row.indate
-        binding.textOutdate.text = row.outdate
-        binding.textWeight.text = row.weight.toString()
-        binding.textCount.text = row.count.toString()
-        binding.textPrice.text = row.price
-        binding.textWon.text = row.won
-        binding.textExtra.text = row.extra
+        binding.textCode.text = row!!.code
+        binding.textOrigin.text = row!!.origin
+        binding.textCultivar.text = row!!.cultivar
+        binding.textIndate.text = row!!.indate
+        binding.textOutdate.text = row!!.outdate
+        binding.textWeight.text = row!!.weight.toString()
+        binding.textCount.text = row!!.count.toString()
+        binding.textPrice.text = row!!.price
+        binding.textWon.text = row!!.won
+        binding.textExtra.text = row!!.extra
 
 
         val builder = AlertDialog.Builder(context)
@@ -37,7 +48,11 @@ class TableDialog(
             .setPositiveButton("확인", null)
         return builder.create()
         Log.d("확인", "만듦")
-        builder.show()
-
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
 }

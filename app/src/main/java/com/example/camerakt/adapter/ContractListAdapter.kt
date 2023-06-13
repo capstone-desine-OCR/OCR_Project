@@ -86,6 +86,7 @@ class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHold
         }
     }
 
+
     fun removeItem(position: Int) {
 
         val newList = currentList.toMutableList()
