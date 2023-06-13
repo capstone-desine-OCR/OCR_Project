@@ -12,7 +12,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <!-- 프로그래스바 -->
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -22,7 +21,7 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -127,12 +126,25 @@
                         android:textColor="@color/black" />
                 </LinearLayout>
 
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/black" />
+
+                <!--                <androidx.constraintlayout.widget.Guideline-->
+                <!--                    android:id="@+id/guideline"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="30dp"-->
+                <!--                    android:background="@color/design_default_color_error"-->
+                <!--                    android:orientation="horizontal" />-->
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content">
 
-                    />
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
         </HorizontalScrollView>
 
