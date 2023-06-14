@@ -9,8 +9,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd63a7b0-f1da-476d-99c7-2fd1c151374b" name="Changes" comment="sw_upload 프로젝트 끝!">
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item.xml" afterDir="false" />
+    <list default="true" id="bd63a7b0-f1da-476d-99c7-2fd1c151374b" name="Changes" comment="sw_upload 프로젝트 최종본">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +260,7 @@
       <workItem from="1686192066206" duration="164000" />
       <workItem from="1686193782346" duration="2674000" />
       <workItem from="1686217944711" duration="13156000" />
-      <workItem from="1686703631836" duration="4721000" />
+      <workItem from="1686703631836" duration="4938000" />
     </task>
     <task id="LOCAL-00001" summary="23_05_19 ui 합치는중">
       <created>1684441934437</created>
@@ -468,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686722664543</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="sw_upload 프로젝트 마무리">
+      <created>1686722765700</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1686722765700</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -492,8 +503,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="23_05_25" />
-    <MESSAGE value="23_05_26 fragment -&gt; adapter -&gt; dialog -&gt; fragment 수정" />
     <MESSAGE value="23_05_26 fragment -&gt; adapter -&gt; dialog -&gt; fragment 수정 ocr도 수정 완료" />
     <MESSAGE value="23_05_26 adapter의 position을 fragment로 전달" />
     <MESSAGE value="23_05_26 adapter의 position을 fragment로 전달 - ocr 확인" />
@@ -517,7 +526,9 @@
     <MESSAGE value="sw_upload 중간점검" />
     <MESSAGE value="sw_upload 중간점검2" />
     <MESSAGE value="sw_upload 프로젝트 끝!" />
-    <option name="LAST_COMMIT_MESSAGE" value="sw_upload 프로젝트 끝!" />
+    <MESSAGE value="sw_upload 프로젝트 마무리" />
+    <MESSAGE value="sw_upload 프로젝트 최종본" />
+    <option name="LAST_COMMIT_MESSAGE" value="sw_upload 프로젝트 최종본" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
