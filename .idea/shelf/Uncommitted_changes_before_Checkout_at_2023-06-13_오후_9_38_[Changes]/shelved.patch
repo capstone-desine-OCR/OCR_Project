@@ -1,0 +1,96 @@
+Index: app/src/main/java/com/example/camerakt/viewmodel/ListViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.camerakt.viewmodel\r\n\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.graphics.Bitmap\r\nimport androidx.appcompat.app.AlertDialog\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport androidx.lifecycle.ViewModel\r\nimport com.example.camerakt.ListActivity\r\nimport com.example.camerakt.R\r\nimport com.example.camerakt.repository.RepositoryImpl\r\n\r\nclass ListViewModel : ViewModel() {\r\n    var repository = RepositoryImpl\r\n\r\n    // 원래 private - getter로 전달해야하지만 ...\r\n    val listBitMapLiveData: MutableLiveData<Bitmap> = MutableLiveData()\r\n\r\n    // fragment\r\n    val listTableData = MutableLiveData<ArrayList<ArrayList<String>>>()\r\n    val listTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = listTableData\r\n\r\n    //\r\n    // 2가지 값을 한번에 묶어서 전달할 수 있음\r\n    val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()\r\n\r\n    // 촬영, ocr 인식 버튼 가시성에 사용\r\n    val visibilityData: MutableLiveData<Pair<Boolean, Boolean>> = MutableLiveData()\r\n\r\n    // fragment에서 오류 인식 -> ListActivity로 돌아감\r\n    fun handleRecognitionError(context: Context) {\r\n        val fragmentManager = (context as AppCompatActivity).supportFragmentManager\r\n        fragmentManager.beginTransaction()\r\n            .remove(fragmentManager.findFragmentById(R.id.fragment_container)!!)\r\n            .commit()\r\n\r\n        val alertDialog = AlertDialog.Builder(context)\r\n            .setTitle(\"인식 오류\")\r\n            .setMessage(\r\n                \"사진이 흔들렸거나 템플릿 양식이 올바르지 않아 오류가 발생하였습니다.\" +\r\n                        \"올바르게 입력 후 재촬영 해주세요.\"\r\n            )\r\n            .setPositiveButton(\"확인\") { dialog, _ ->\r\n                dialog.dismiss()\r\n                val intent = Intent(context, ListActivity::class.java)\r\n                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP\r\n                ListActivity.clearImage = true\r\n                visibilityData.value = Pair(true, true) // 촬영, ocr 인식 버튼이 보여지게\r\n                context.startActivity(intent)\r\n            }\r\n            .create()\r\n        alertDialog.show()\r\n    }\r\n\r\n    fun setInferred(data: String, context: Context) {\r\n        repository.getResult(data) // 데이터를 가져오고\r\n\r\n        val result = ArrayList<ArrayList<String>>()\r\n\r\n        repository.lineReturn = lineReturn@{\r\n            // 템플릿 양식에 맞지않는 이미지를 인식하는 등 잘못 인식 시\r\n            for (i in 0 until it.size) {\r\n                if (it[i].size != 10) {\r\n                    handleRecognitionError(context)\r\n                    return@lineReturn\r\n                }\r\n            }\r\n\r\n\r\n\r\n            for (current in it) {\r\n                var add_result = ArrayList<String>()\r\n                if (current.first().contains(\"코드\")) {\r\n                    continue\r\n                } else {\r\n                    try {\r\n                        Integer.valueOf(current.first())\r\n                    } catch (e: NumberFormatException) {\r\n                        result.add(current)\r\n                        continue\r\n                    }\r\n                    current.remove(current.first())\r\n                    result.add(current)\r\n                }\r\n            }\r\n\r\n\r\n\r\n            listTableData.value =\r\n                result  // ArrayList<ArrayList<String>>> MutableLiveData로 담아서 obsever가 인식할 수 있도록 view로 던짐\r\n        }\r\n    }\r\n\r\n\r\n}\r\n\r\ninterface AlertDialogListener {\r\n    fun showAlertDialog(title: String, message: String)\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/camerakt/viewmodel/ListViewModel.kt b/app/src/main/java/com/example/camerakt/viewmodel/ListViewModel.kt
+--- a/app/src/main/java/com/example/camerakt/viewmodel/ListViewModel.kt	(revision dbb2b2850bb01ed166cbeb727fdbfe916560420c)
++++ b/app/src/main/java/com/example/camerakt/viewmodel/ListViewModel.kt	(date 1686659848326)
+@@ -98,4 +98,4 @@
+ 
+ interface AlertDialogListener {
+     fun showAlertDialog(title: String, message: String)
+-}
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/camerakt/ListActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.camerakt\r\n\r\nimport android.content.Intent\r\nimport android.graphics.ImageDecoder\r\nimport android.net.Uri\r\nimport android.os.Build\r\nimport android.os.Bundle\r\nimport android.provider.MediaStore\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.Toast\r\nimport androidx.activity.viewModels\r\nimport androidx.annotation.RequiresApi\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.content.FileProvider\r\nimport androidx.core.graphics.drawable.toBitmap\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport com.example.camerakt.databinding.ActivityListBinding\r\nimport com.example.camerakt.util.CameraUtil\r\nimport com.example.camerakt.viewmodel.ListViewModel\r\nimport com.example.myocr.util.MyEncoder\r\nimport java.io.File\r\nimport java.io.IOException\r\nimport java.util.*\r\n\r\n\r\nclass ListActivity : AppCompatActivity() {\r\n    val REQUEST_IMAGE_CAPTURE = 1 // 카메라 사진 촬영 요청 코드\r\n    lateinit var curPhotoPath: String // 문자열 형태의 사진 경로 값\r\n\r\n    private lateinit var binding: ActivityListBinding\r\n\r\n    private val myEncoder = MyEncoder()\r\n\r\n    var data: String? = null\r\n\r\n    // 뷰 모델\r\n    // val listViewModel: ListViewModel = ViewModelProvider(this).get(ListViewModel::class.java) // 동일한 역할...?\r\n    // by viewModels() : 독립적인 수명주기를 가질 수 있도록 한다.\r\n    private val listViewModel: ListViewModel by viewModels()\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n\r\n\r\n        binding = ActivityListBinding.inflate(layoutInflater)\r\n        setContentView(binding.root)\r\n\r\n        val viewModel = ViewModelProvider(this).get(ListViewModel::class.java)\r\n\r\n\r\n        viewModel.visibilityData.observe(this, { visibilityPair ->\r\n            binding.btnCameraList.visibility = if (visibilityPair.first) View.VISIBLE else View.GONE\r\n            binding.btnOcrList.visibility = if (visibilityPair.second) View.VISIBLE else View.GONE\r\n        })\r\n\r\n\r\n        //onActivityResult 의 결과 listBitMapLiveData 변경 감지 -> 화면에 나타나도록 함 = 데이터 유지\r\n        listViewModel.listBitMapLiveData.observe(this) // this : listActivity\r\n        { bitmap -> binding.listImage.setImageBitmap(bitmap) }\r\n\r\n\r\n\r\n        binding.btnCameraList.setOnClickListener {\r\n\r\n            // list_Activity 의 frameLayOut 의 fragment 위치를 찾는 것\r\n            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)\r\n\r\n\r\n            // fragment가 있을떄 다시 사진을 찍는다면 fragment를 삭제한다\r\n            if (currentFragment is ListOcrFragment) {\r\n                supportFragmentManager.beginTransaction()\r\n                    .remove(currentFragment)\r\n                    .commit()\r\n                Log.d(\"btnCamera\", \"기존 fragment 삭제  \")\r\n            }\r\n\r\n\r\n            takeCapture()  // 기본 카메라 앱을 실행하여 사진 촬영\r\n        }\r\n\r\n        binding.btnOcrList.setOnClickListener {\r\n            if (binding.listImage.drawable != null) {\r\n\r\n                //fragment 생성 해서 activity 위에 붙여놓음\r\n                val fragment = ListOcrFragment()\r\n                // fragment 해주는 역할\r\n                val transaction = supportFragmentManager.beginTransaction()\r\n                //listActivity\r\n                transaction.replace(R.id.fragment_container, fragment)\r\n                transaction.commit()\r\n\r\n                // ocr인식 버튼 클릭 시 촬영, 인식 버튼 프래그먼트 화면에서 안보이게 설정\r\n                binding.btnCameraList.visibility = View.GONE\r\n                binding.btnOcrList.visibility = View.GONE\r\n\r\n                onClick(it)// 기본 카메라 앱을 실행하여 사진 촬영\r\n            } else {\r\n                Toast.makeText(this, \"listImage가 존재하지 않습니다.\", Toast.LENGTH_SHORT).show()\r\n                Log.d(\"empty Image\", \"이미지 존재하지 않음\")\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    fun onClick(v: View) {\r\n//        Toast.makeText(this, \"clicked\", Toast.LENGTH_SHORT).show()\r\n        when (v) {\r\n            binding.btnOcrList -> {\r\n                Toast.makeText(this, \"List - clicked\", Toast.LENGTH_SHORT).show()\r\n                data =\r\n                    myEncoder.encodeImage(myEncoder.getBitmap(binding.listImage.drawable.toBitmap())) // bitmap 가져와서 -> base64로 변환\r\n                data?.let { listViewModel.setInferred(it, this) } // 클릭시 post 값 띄움\r\n\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun takeCapture() {\r\n        // 기본 카메라 앱 실행\r\n        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->\r\n            takePictureIntent.resolveActivity(packageManager)?.also {\r\n                val photoFile: File? = try {\r\n                    CameraUtil.createImageFile(this)// 이미지 파일 생성\r\n                } catch (ex: IOException) {\r\n                    null\r\n                }\r\n                photoFile?.also { // null check 하려면 ? 을 써줘야 한다. -> ? 없을시 it null 인식해서 오류\r\n                    val photoURI: Uri = FileProvider.getUriForFile(\r\n                        this, \"com.example.camerakt.fileprovider\", it\r\n                    )\r\n\r\n                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)\r\n                    // 사진 결과물을 다시 가져와야함\r\n                    // forResult : mainActivity -> serverActivity -> mainActivity 받게되는 결과값\r\n                    // 카메라 기본 앱도 Activity 형태라 찍은 사진 결과물을 result를 통해서 받는것\r\n                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE) // 21 이라 괜찮\r\n\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    // 사진을 찍은 결과값을 listViewModel 의 listBitMapLiveData 의 변화감지 data로 설정\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n\r\n        Log.d(\"CHECK1\", \"여기까지 전달이 되나?\")\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {\r\n            val file = File(CameraUtil.curPhotoPath)\r\n            val decode = ImageDecoder.createSource(\r\n                this.contentResolver,\r\n                Uri.fromFile(file)\r\n            )\r\n            Log.d(\"CHECK2\", \"여기까지 전달이 되나?\")\r\n            val bitmap = ImageDecoder.decodeBitmap(decode)\r\n\r\n            Log.d(\"CHECK3\", \"여기까지 전달이 되나?\")\r\n//            binding.listImage.setImageBitmap(bitmap)\r\n            listViewModel.listBitMapLiveData.value =\r\n                bitmap  // 이미지 뷰에 bitmap을 저장후 -> observer로 재 갱신???\r\n\r\n            Log.d(\"CHECK4\", \"여기까지 전달이 되나?\")\r\n            CameraUtil.savePhoto(this, bitmap)\r\n        }\r\n    }\r\n\r\n    // ListActivity에서 인식 오류 시 clearImage=true 설정, ListActivity로 돌아옴\r\n    private fun clearImage() {\r\n        val imageView = binding.listImage\r\n        imageView.setImageDrawable(null)\r\n    }\r\n\r\n\r\n    override fun onStart() {\r\n        super.onStart()\r\n        Log.d(\"listActivity\", \"\")\r\n    }\r\n\r\n    override fun onResume() {\r\n        super.onResume()\r\n        Log.d(\"listActivity\", \"onResume List\")\r\n        if (clearImage) {\r\n            clearImage()\r\n            clearImage = false // 플래그 초기화\r\n        }\r\n    }\r\n\r\n\r\n    override fun onPause() {\r\n        super.onPause()\r\n        Log.d(\"listActivity\", \"onPause List\")\r\n    }\r\n\r\n    override fun onRestart() {\r\n        super.onRestart()\r\n        Log.d(\"listActivity\", \"onRestart List\")\r\n    }\r\n\r\n    override fun onStop() {\r\n        super.onStop()\r\n        Log.d(\"listActivity\", \"onStop List\")\r\n    }\r\n\r\n    override fun onDestroy() {\r\n        super.onDestroy()\r\n        Log.d(\"listActivity\", \"onDestroy List\")\r\n    }\r\n\r\n    companion object {\r\n        var clearImage: Boolean = false\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/camerakt/ListActivity.kt b/app/src/main/java/com/example/camerakt/ListActivity.kt
+--- a/app/src/main/java/com/example/camerakt/ListActivity.kt	(revision dbb2b2850bb01ed166cbeb727fdbfe916560420c)
++++ b/app/src/main/java/com/example/camerakt/ListActivity.kt	(date 1686659848336)
+@@ -17,7 +17,7 @@
+ import androidx.lifecycle.ViewModelProvider
+ import com.example.camerakt.databinding.ActivityListBinding
+ import com.example.camerakt.util.CameraUtil
+-import com.example.camerakt.viewmodel.ListViewModel
++
+ import com.example.myocr.util.MyEncoder
+ import java.io.File
+ import java.io.IOException
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    repositories {\r\n        // Make sure that you have the following two repositories\r\n        google()  // Google's Maven repository\r\n\r\n        mavenCentral()  // Maven Central repository\r\n\r\n    }\r\n    dependencies {\r\n\r\n        // Add the dependency for the Google services Gradle plugin\r\n        classpath 'com.google.gms:google-services:4.3.15'\r\n        //이건 뭘까^^\r\n        //classpath \"com.android.tools.build:gradle:4.1.0\"\r\n\r\n    }\r\n}\r\nplugins {\r\n    id 'com.android.application' version '7.4.2' apply false\r\n    id 'com.android.library' version '7.4.2' apply false\r\n    id 'org.jetbrains.kotlin.android' version '1.8.0' apply false\r\n}\r\n\r\n\r\nallprojects {\r\n\r\n    repositories {\r\n        /* // Make sure that you have the following two repositories\r\n         google()  // Google's Maven repository\r\n\r\n         mavenCentral()  // Maven Central repository*/\r\n\r\n    }\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle	(revision dbb2b2850bb01ed166cbeb727fdbfe916560420c)
++++ b/build.gradle	(date 1686659844646)
+@@ -17,8 +17,8 @@
+     }
+ }
+ plugins {
+-    id 'com.android.application' version '7.4.2' apply false
+-    id 'com.android.library' version '7.4.2' apply false
++    id 'com.android.application' version '7.4.0-beta02' apply false
++    id 'com.android.library' version '7.4.0-beta02' apply false
+     id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
+ }
+ 
+Index: local.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>## This file must *NOT* be checked into Version Control Systems,\r\n# as it contains information specific to your local configuration.\r\n#\r\n# Location of the SDK. This is only used by Gradle.\r\n# For customization when using a Version Control System, please read the\r\n# header note.\r\n#Sun Jun 11 15:59:42 KST 2023\r\nsdk.dir=C\\:\\\\Users\\\\byeonghun\\\\AppData\\\\Local\\\\Android\\\\Sdk\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/local.properties b/local.properties
+--- a/local.properties	(revision dbb2b2850bb01ed166cbeb727fdbfe916560420c)
++++ b/local.properties	(date 1686659848290)
+@@ -5,4 +5,4 @@
+ # For customization when using a Version Control System, please read the
+ # header note.
+ #Sun Jun 11 15:59:42 KST 2023
+-sdk.dir=C\:\\Users\\byeonghun\\AppData\\Local\\Android\\Sdk
++sdk.dir=C\:\\Users\\jookbooin\\AppData\\Local\\Android\\Sdk
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"FrameworkDetectionExcludesConfiguration\">\r\n    <file type=\"web\" url=\"file://$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" project-jdk-name=\"jbr-17\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision dbb2b2850bb01ed166cbeb727fdbfe916560420c)
++++ b/.idea/misc.xml	(date 1686659848348)
+@@ -1,9 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="FrameworkDetectionExcludesConfiguration">
+     <file type="web" url="file://$PROJECT_DIR$" />
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+ </project>
+\ No newline at end of file

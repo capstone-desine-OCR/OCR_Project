@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example.camerakt">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 파일 쓰기 권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> <!-- 파일 읽기 권한 -->
+    <uses-permission android:name="android.permission.CAMERA"/> <!-- 카메라 권한 -->
+    <uses-permission android:name="android.permission.INTERNET"/> <!-- 서버 통신을 위한 인터넷 권한 -->
+    <uses-feature
+            android:name="android.hardware.camera"
+            android:required="true"/>
+
+    <application
+            android:allowBackup="true"
+            android:dataExtractionRules="@xml/data_extraction_rules"
+            android:fullBackupContent="@xml/backup_rules"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:requestLegacyExternalStorage="true"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.CameraKt"
+            tools:targetApi="31">
+        <activity
+                android:name=".TableActivity"
+                android:exported="false">
+            <meta-data
+                    android:name="android.app.lib_name"
+                    android:value=""/>
+        </activity>
+        <activity
+                android:name=".MainActivity"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".OneActivity"
+                android:exported="false">
+            <meta-data
+                    android:name="android.app.lib_name"
+                    android:value=""/>
+        </activity>
+        <activity
+                android:name=".ListActivity"
+                android:exported="false">
+            <meta-data
+                    android:name="android.app.lib_name"
+                    android:value=""/>
+        </activity> <!-- 여기서 선언하는 것을 takeCapture의 photoFile?.also .. photoURI 의 authority 에서 사용 -->
+        <!--
+  fileProvider 필요이유 :
+                (안드로이드) 파일 제공자 , 누가 사용하려고 하는지 명시해줘야 제대로 동작하도록 보안 강화 시켜놓은것을 완화시켜줄 수 있도록 함
+        -->
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="com.example.camerakt.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths"/> <!-- provider_paths 보안을 해주는 경로 -->
+            <!-- file_paths : 외부 저장 경로 보안을 허용해달라는 요청 -->
+
+        </provider>
+    </application>
+
+</manifest>
