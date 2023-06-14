@@ -19,11 +19,7 @@ public class RecognitionRequest {
     @SerializedName("timestamp")
     @Expose
     private Integer timestamp;
-    /*
-    @SerializedName("lang")
-    @Expose
-    private String lang;
-     */
+
     @SerializedName("images")
     @Expose
     private List<ImageFields> images = null;
@@ -31,7 +27,7 @@ public class RecognitionRequest {
     //enableTableDetection
     @SerializedName("enableTableDetection")
     @Expose
-    private Boolean enableTableDetection=true;
+    private Boolean enableTableDetection = true;
 
 
     public String getVersion() {

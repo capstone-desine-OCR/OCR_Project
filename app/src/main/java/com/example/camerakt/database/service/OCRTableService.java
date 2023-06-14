@@ -18,14 +18,8 @@ public class OCRTableService {
         dbHelper.addProduct(productData);
     }
 
-    //    public List<OCRTable> getAllProducts() {
-//        List<OCRTable> result = dbHelper.getAllProducts();
-//        return result;
-//    }
     public void getAllProducts(ProductCallBack callBack) {
-//        List<OCRTable> result =
         dbHelper.getAllProducts(callBack);
-//        return result;
     }
 
     public OCRTable getProduct(String productId) {

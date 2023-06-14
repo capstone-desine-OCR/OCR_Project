@@ -3,11 +3,8 @@ package com.example.camerakt.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class Field {
 
-    //ImageField Object Reference
     @SerializedName("name")
     @Expose
     private String name;
@@ -27,12 +24,8 @@ public class Field {
 
     @SerializedName("lineBreak")
     @Expose
-    private Boolean lineBreak=true;
+    private Boolean lineBreak = true;
 
-    // type
-    //subField
-    //checkd
-    //lineBreak
 
     public String getValueType() {
         return valueType;

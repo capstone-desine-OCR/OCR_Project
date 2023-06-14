@@ -3,107 +3,124 @@ package com.example.camerakt.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.camerakt.ListDialog
-import com.example.camerakt.databinding.RowItemBinding
-import com.example.camerakt.viewmodel.ListViewModel
+import com.example.camerakt.TableDialog
+import com.example.camerakt.database.model.OCRTable
+import com.example.camerakt.database.service.OCRTableService
+import com.example.camerakt.databinding.ItemBinding
 
-/*
-class ContactListAdapter : ListAdapter<Contract, ContractListAdapter.ViewHolder>(diffUtil) {
-    //private lateinit var binding: ContactItemBinding
-    inner class ViewHolder(private val binding: ItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(contract: Contract) {
-            binding.codeView.text = contract.code
-            binding.originView.text = contract.orgin
-            binding.cultivarView.text = contract.cultival
-        }
 
-    }
+class TableAdapter() : ListAdapter<OCRTable, TableAdapter.ViewHolder>(diffUtil) {
+    private val ocrTableService: OCRTableService = OCRTableService()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(
+            ItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 
-    companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<Contract>() {
-            override fun areItemsTheSame(oldItem: Contract, newItem: Contract): Boolean {
-                return oldItem.code == newItem.code
+
+    // ViewHolder 는 목록 1 줄임-> 여러 목록을 ViewHolder 1칸으로 재사용하는 것
+    inner class ViewHolder(private val binding: ItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(contract: OCRTable) {
+
+            binding.code.text = contract.code
+            binding.origin.text = contract.origin
+            binding.cultivar.text = contract.cultivar
+
+            binding.delete.setOnClickListener() {
+                val builder = AlertDialog.Builder(binding.root.context)
+
+                builder.setTitle("삭제")
+                builder.setMessage("[${contract.code}]를 삭제하시겠습니까?")
+                builder.setPositiveButton("확인") { dialog, which ->
+                    // 삭제 동작 수행
+                    Log.d("확인", "삭제버튼 : ${contract.code}")
+
+                    // 1. db 상에서 삭제
+                    ocrTableService.deleteProduct(contract.code)
+                    // 2. 화면단에서 목록 삭제 초기화 -> submitList()
+                    removeItem(adapterPosition)
+                }
+
+                builder.setNegativeButton("취소") { dialog, which ->
+                    dialog.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
             }
 
-            override fun areContentsTheSame(oldItem: Contract, newItem: Contract): Boolean {
-                return oldItem.orgin == newItem.orgin
+            binding.detail.setOnClickListener() {
+                Log.d("확인", "상세보기 버튼 : ${contract.code}")
+                val dialog = TableDialog(contract)
+                dialog.show(
+                    (binding.root.context as AppCompatActivity).supportFragmentManager,
+                    "dialog_tag"
+                )
+
             }
         }
     }
-}*/
 
 
-class TableAdapter(
-    internal val data: ArrayList<ArrayList<String>>,
-    private val listViewModel: ListViewModel
-) :
-//private lateinit var binding: ContactItemBinding
+    fun removeItem(position: Int) {
 
+        val newList = currentList.toMutableList()
+//        for (new in newList)
+//            Log.d("removeItem-new", "${new.code} 입니다")
+        Log.d("삭제 위치", "삭제 위치 :$position 입니다.")
+        Log.d("삭제  code", "삭제  code : ${newList[position].code} 입니다.")
 
-    RecyclerView.Adapter<TableAdapter.ViewHolder>() {
+        newList.removeAt(position)
+//        Log.d("삭제 이후 위치", "삭제 이후 위치 :$position 입니다.")
+//        Log.d("현재 삭제 위치", "삭제 이후 위치 code: ${newList[position].code}")
 
-    //findByView 지양  binding으로 초기화
-    // onCreateViewHolder: 한 화면에 그려지는 아이템 개수만큼 레이아웃 생성
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableAdapter.ViewHolder {
-        val binding = RowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        for (new in newList)
+            Log.d("변경 이후 목록", "${new.code} 입니다")
+
+        submitList(newList)
+        Log.d("submitList 동작", "submitList 동작")
     }
 
-    //0~ data.size가 position으로 들어옴 RecyclerView이 매단계마다 onBindViewHolder를 불러서 ArrayList<String> 불러옴
-    // onBindViewHolder: 생성된 아이템 레이아웃에 값 입력 후 목록에 출력(생성된 뷰홀더를 화면에 보여줌)
-    override fun onBindViewHolder(holder: TableAdapter.ViewHolder, position: Int) {
-        val row = data[position]
-        holder.bind(row) //bind: 화면에 데이터를 세팅하는 함수
 
-        holder.itemView.setOnClickListener {
-            Log.d("click", "$row ")
-            Log.d("click", "$position 입니다")
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<OCRTable>() {
 
-//            val dialog = ListDialog(row) , position을 생성자로 전달해서 dialog를 거쳐 fragment로 전달
-            val dialog = ListDialog(row, position, listViewModel)
-            Log.d("click", "$dialog 입니다")
-            dialog.show(
-                (holder.itemView.context as AppCompatActivity).supportFragmentManager,
-                "list_dialog"
-            )
+            //diffUtil
 
-//            listViewModel.editRowData.value = row
-        } // 선택한 열을
-    }
+            //두 아이템이 같은 객체인지 여부를 반환한다. (고유값,ID,해쉬값)
+            override fun areItemsTheSame(oldItem: OCRTable, newItem: OCRTable): Boolean {
+                Log.d(
+                    "areItemsTheSame",
+                    "oldItem-code : ${oldItem.code} / newItem-code : ${newItem.code} / ${oldItem === newItem}"
+                )
+                // kotlin 주소값 비교 === <-> java 참조값 비교 == 동일
+                return oldItem === newItem
+            }
 
-    //ArrayList<String> 총 개수
-    override fun getItemCount(): Int = data.size //목록에 보여질 아이템의 개수
-
-
-    // 내부 뷰 홀더 클래스
-    // viewHolder라는 템플릿을 처음에 생성하고 data.size 개수 만큼 반복해서 재활용 -> 방향에따라서 재사용해서 붙인다는 느낌
-    class ViewHolder(private val binding: RowItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        //        private val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
-        fun bind(row: ArrayList<String>) {
-
-            // 독립적으로 작동 ?
-//            binding.listNumber.text = row[0]
-            binding.listCode.text = row[0]
-            binding.listOrigin.text = row[1]
-            binding.listCultivar.text = row[2]
-            binding.listIndate.text = row[3]
-            binding.listOutdate.text = row[4]
-            binding.listWeight.text = row[5]
-            binding.listCount.text = row[6]
-            binding.listPrice.text = row[7]
-            binding.listWon.text = row[8]
-            binding.listExtra.text = row[9]
+            //두 아이템이 같은 데이터를 갖고 있는지 여부를 반환한다. -> UI 변경용
+            override fun areContentsTheSame(oldItem: OCRTable, newItem: OCRTable): Boolean {
+                Log.d(
+                    "areContentsTheSame",
+                    "oldItem-code : ${oldItem.code} / newItem-code : ${newItem.code} / ${oldItem == newItem}"
+                )
+                // 객체 값 비교 java equals -> (ocrTable equals , hashcode 구현해줘야 할 것 같았다)
+                return oldItem == newItem
+            }
         }
     }
 }

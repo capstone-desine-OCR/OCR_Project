@@ -21,9 +21,7 @@ public class RecognitionResults {
     @SerializedName("message")
     @Expose
     private String message;
-    /*@SerializedName("fields")
-    @Expose
-    private List<Field> fields = null;*/
+
     @SerializedName("validationResult")
     @Expose
     private ValidationResult validationResult;
@@ -31,13 +29,6 @@ public class RecognitionResults {
     @SerializedName("tables")
     @Expose
     private List<ImageTable> tables = null;
-
-
-    //matchedTemplate - name , id
-    //title
-
-    //ImageField Object Reference
-
 
     public String getUid() {
         return uid;

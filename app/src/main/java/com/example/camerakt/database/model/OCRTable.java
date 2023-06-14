@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class OCRTable {
-    //    private int num;
+
     private String code;
     private String origin;
     private String cultivar;
@@ -21,7 +21,6 @@ public class OCRTable {
     public Map<String, Object> toMap() {
         Map<String, Object> productData = new HashMap<>();
 
-//        productData.put("번호", num);
         productData.put("코드", code);
         productData.put("원산지", origin);
         productData.put("품종", cultivar);
@@ -41,9 +40,7 @@ public class OCRTable {
     }
 
     public void fromList(List<String> input) {
-        //String firstElement = input.get(0);
         try {
-            //num = Integer.parseInt(firstElement);
             code = input.get(0);
             origin = input.get(1);
             cultivar = input.get(2);
@@ -54,17 +51,12 @@ public class OCRTable {
             price = input.get(7);
             won = input.get(8);
             extra = input.get(9);
-            /*if (input.size() > 10) {
-                extra = input.get(10);
-            }*/
+
         } catch (NumberFormatException e) {
 
         }
     }
 
-//    public void setNum(int num) {
-//        this.num = num;
-//    }
 
     public String getCode() {
         return code;

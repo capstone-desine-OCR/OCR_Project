@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.camerakt.adapter.CustomItemDecoration
-import com.example.camerakt.adapter.TableAdapter
+import com.example.camerakt.adapter.ListAdapter
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.databinding.FragmentListOcrBinding
@@ -31,7 +31,7 @@ class ListOcrFragment : Fragment() {
     private var _binding: FragmentListOcrBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: TableAdapter
+    private lateinit var adapter: ListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
@@ -59,14 +59,14 @@ class ListOcrFragment : Fragment() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = TableAdapter(ArrayList(), listViewModel)
+        adapter = ListAdapter(ArrayList(), listViewModel)
         binding.recyclerView.adapter = adapter
 
         // data -> : observe에 의해  ArrayList<ArrayList<String>>의 변경이 감지되었을때 -> 이후 실행 ( data를 adapter로 넘긴다)
         // repository  -> adapter -> recy
         listViewModel.listTableData.observe(viewLifecycleOwner) { data ->
 
-            adapter = TableAdapter(data, listViewModel)
+            adapter = ListAdapter(data, listViewModel)
             binding.recyclerView.adapter =
                 adapter // recyclerView 로 adapter 를 붙여주는 것 -> ViewHolder를 붙여주는 것
 
@@ -103,7 +103,7 @@ class ListOcrFragment : Fragment() {
 
         }
     }
-    
+
     // fragment 가 fragmentView 보다 오래 유지되기 떄문에 null을 쓴다.
     override fun onDestroyView() {
         super.onDestroyView()

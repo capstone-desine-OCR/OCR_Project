@@ -110,7 +110,6 @@ public class OCRTableFirebaseHelper {
 
 
     public void documentToOCRTable(OCRTable result, DocumentSnapshot document) {
-//        result.setNum(Integer.valueOf((String) document.get("번호")));
         result.setCode((String) document.get("코드"));
         result.setOrigin((String) document.get("원산지"));
         result.setCultivar((String) document.get("품종"));

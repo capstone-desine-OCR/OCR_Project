@@ -3,7 +3,7 @@ package com.example.camerakt
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.camerakt.adapter.ContractListAdapter
+import com.example.camerakt.adapter.TableAdapter
 import com.example.camerakt.database.callback.ProductCallBack
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.database.service.OCRTableService
@@ -45,8 +45,8 @@ class TableActivity : AppCompatActivity() {
 
     // table oncreate 초기화 용
     private fun processData(dbList: MutableList<OCRTable>) {
-        val contractListAdapter = ContractListAdapter()
-        contractListAdapter.submitList(dbList) // adapter에 받아온 dbList를 반영함
-        binding.recyclerView.adapter = contractListAdapter
+        val tableAdapter = TableAdapter()
+        tableAdapter.submitList(dbList) // adapter에 받아온 dbList를 반영함
+        binding.recyclerView.adapter = tableAdapter
     }
 }
