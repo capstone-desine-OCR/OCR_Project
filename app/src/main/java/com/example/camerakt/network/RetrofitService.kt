@@ -13,16 +13,14 @@ interface RetrofitService {
 
     //요청 헤더
     @Headers(
-            "Content-Type: application/json",
-            //RW9DVFF1SHlnbWpkUVdpUkdYSU51amdUU2xOYWRZYkU
-//        "X-OCR-SECRET: SHJyS1FLUHdrV29uT1RxWUhYd3ZCYlBJUHpQSFB6U1k="
-            "X-OCR-SECRET: RW9DVFF1SHlnbWpkUVdpUkdYSU51amdUU2xOYWRZYkU="
+        "Content-Type: application/json",
+        "X-OCR-SECRET: "  // api key 넣는곳
     )
 
     @POST("general")
     fun postRequest(
-            // RecognitionRequest 타입의 params라는 파라미터를 바디에 포함하여 요청을 전송
-            @Body params: RecognitionRequest
+        // RecognitionRequest 타입의 params라는 파라미터를 바디에 포함하여 요청을 전송
+        @Body params: RecognitionRequest
     ): Call<Example> // Example : API에서 응답으로 받는 데이터 모델의 클래스명
 
     /*

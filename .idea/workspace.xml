@@ -9,18 +9,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd63a7b0-f1da-476d-99c7-2fd1c151374b" name="Changes" comment="sw_upload 중간점검">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/adapter/ListAdapter.kt" afterDir="false" />
+    <list default="true" id="bd63a7b0-f1da-476d-99c7-2fd1c151374b" name="Changes" comment="sw_upload 중간점검2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/ListOcrFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/ListOcrFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/TableActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/TableActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/adapter/ContractListAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/adapter/TableAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/adapter/TableAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/database/OCRTableFirebaseHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/database/OCRTableFirebaseHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/database/model/OCRTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/database/model/OCRTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/database/service/OCRTableService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/database/service/OCRTableService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/demand/RecognitionRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/demand/RecognitionRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/repository/RepositoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/repository/RepositoryImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/network/RetrofitClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/network/RetrofitClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/network/RetrofitService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/camerakt/network/RetrofitService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_all.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_list_ocr.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_list_ocr.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +261,7 @@
       <workItem from="1686192066206" duration="164000" />
       <workItem from="1686193782346" duration="2674000" />
       <workItem from="1686217944711" duration="13156000" />
-      <workItem from="1686703631836" duration="3930000" />
+      <workItem from="1686703631836" duration="4549000" />
     </task>
     <task id="LOCAL-00001" summary="23_05_19 ui 합치는중">
       <created>1684441934437</created>
@@ -464,7 +459,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686721326617</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="sw_upload 중간점검2">
+      <created>1686722048145</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1686722048145</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -488,7 +490,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="23_05_23 예시 recyclerView-viewHolder 에 dialog 띄우기" />
     <MESSAGE value="23_05_23 예시 dialog editView 에 viewHolder position data 초기화 이후 잠시 저장2" />
     <MESSAGE value="23_05_25" />
     <MESSAGE value="23_05_26 fragment -&gt; adapter -&gt; dialog -&gt; fragment 수정" />
@@ -513,7 +514,8 @@
     <MESSAGE value="23_06_13 dialog 오류해결" />
     <MESSAGE value="23_06_13 레이아웃 추가조정" />
     <MESSAGE value="sw_upload 중간점검" />
-    <option name="LAST_COMMIT_MESSAGE" value="sw_upload 중간점검" />
+    <MESSAGE value="sw_upload 중간점검2" />
+    <option name="LAST_COMMIT_MESSAGE" value="sw_upload 중간점검2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
