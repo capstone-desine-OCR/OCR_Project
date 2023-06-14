@@ -12,8 +12,6 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 
 class MainActivity : AppCompatActivity() {
-//    var : 변동 가능
-//    val : 변동 불가능
 
     val REQUEST_IMAGE_CAPTURE = 1 // 카메라 사진 촬영 요청 코드
     lateinit var curPhotoPath: String // 문자열 형태의 사진 경로 값
@@ -45,15 +43,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val myViewModel: MyViewModel = ViewModelProvider(this).get(MyViewModel::class.java) //
-
-        // Obserber 객체 생성 : 뷰 모델이 데이터를 전달하기 위해 필요함
-//        val nameObserver = Observer<java.lang.StringBuilder> {
-//            binding.textView.text = it
-//        }
-
-        // LifecycleOwner(이 코드에서는 액티비티에 해당)와 Observer객체를 넣어 LiveData 관찰
-//        myViewModel.liveData_String.observe(this, nameObserver)
 
         setPermission() // 앱 시작할때 권한 체크하는 메소드 수행
 

@@ -9,9 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.camerakt.database.model.OCRTable
 import com.example.camerakt.databinding.DialogBinding
 
-class TableDialog(
-    //private val row: OCRTable
-) : DialogFragment() {
+class TableDialog() : DialogFragment() {
     private lateinit var binding: DialogBinding
     private var row: OCRTable? = null
 
@@ -21,15 +19,11 @@ class TableDialog(
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        Log.d("확인", "들어옴")
         if (row == null) {
             dismiss()
             return super.onCreateDialog(savedInstanceState)
         }
         binding = DialogBinding.inflate(LayoutInflater.from(context))
-
-        //binding = DialogBinding.inflate(LayoutInflater.from(context), null, false)
-
         binding.textCode.text = row!!.code
         binding.textOrigin.text = row!!.origin
         binding.textCultivar.text = row!!.cultivar

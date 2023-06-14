@@ -14,7 +14,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
-import androidx.lifecycle.ViewModelProvider
 import com.example.camerakt.databinding.ActivityListBinding
 import com.example.camerakt.util.CameraUtil
 import com.example.camerakt.viewmodel.ListViewModel
@@ -42,31 +41,25 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+//        val viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
 
-
-        viewModel.visibilityData.observe(this, { visibilityPair ->
+        listViewModel.visibilityData.observe(this) { visibilityPair ->
             binding.btnCameraList.visibility = if (visibilityPair.first) View.VISIBLE else View.GONE
             binding.btnOcrList.visibility = if (visibilityPair.second) View.VISIBLE else View.GONE
-        })
-
+        }
 
         //onActivityResult 의 결과 listBitMapLiveData 변경 감지 -> 화면에 나타나도록 함 = 데이터 유지
         listViewModel.listBitMapLiveData.observe(this) // this : listActivity
         { bitmap -> binding.listImage.setImageBitmap(bitmap) }
 
 
-
         binding.btnCameraList.setOnClickListener {
 
             // list_Activity 의 frameLayOut 의 fragment 위치를 찾는 것
             val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-
 
             // fragment가 있을떄 다시 사진을 찍는다면 fragment를 삭제한다
             if (currentFragment is ListOcrFragment) {
@@ -106,7 +99,6 @@ class ListActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun onClick(v: View) {
-//        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
         when (v) {
             binding.btnOcrList -> {
                 Toast.makeText(this, "List - clicked", Toast.LENGTH_SHORT).show()
@@ -136,8 +128,7 @@ class ListActivity : AppCompatActivity() {
                     // 사진 결과물을 다시 가져와야함
                     // forResult : mainActivity -> serverActivity -> mainActivity 받게되는 결과값
                     // 카메라 기본 앱도 Activity 형태라 찍은 사진 결과물을 result를 통해서 받는것
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE) // 21 이라 괜찮
-
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
             }
         }
@@ -146,7 +137,6 @@ class ListActivity : AppCompatActivity() {
     // 사진을 찍은 결과값을 listViewModel 의 listBitMapLiveData 의 변화감지 data로 설정
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        Log.d("CHECK1", "여기까지 전달이 되나?")
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val file = File(CameraUtil.curPhotoPath)
@@ -154,15 +144,10 @@ class ListActivity : AppCompatActivity() {
                 this.contentResolver,
                 Uri.fromFile(file)
             )
-            Log.d("CHECK2", "여기까지 전달이 되나?")
             val bitmap = ImageDecoder.decodeBitmap(decode)
 
-            Log.d("CHECK3", "여기까지 전달이 되나?")
-//            binding.listImage.setImageBitmap(bitmap)
-            listViewModel.listBitMapLiveData.value =
-                bitmap  // 이미지 뷰에 bitmap을 저장후 -> observer로 재 갱신???
+            listViewModel.listBitMapLiveData.value = bitmap
 
-            Log.d("CHECK4", "여기까지 전달이 되나?")
             CameraUtil.savePhoto(this, bitmap)
         }
     }
@@ -176,7 +161,7 @@ class ListActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("listActivity", "")
+        Log.d("listActivity", "onStart List")
     }
 
     override fun onResume() {
@@ -212,6 +197,5 @@ class ListActivity : AppCompatActivity() {
     companion object {
         var clearImage: Boolean = false
     }
-
-
+    
 }

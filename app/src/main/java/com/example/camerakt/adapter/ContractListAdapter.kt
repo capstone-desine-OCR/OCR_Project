@@ -14,7 +14,6 @@ import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.databinding.ItemBinding
 
 
-// ListAdapter - diffutil로 구성하는 것이 화면 변화시키는 데에 더 효율적
 class ContractListAdapter() : ListAdapter<OCRTable, ContractListAdapter.ViewHolder>(diffUtil) {
     private val ocrTableService: OCRTableService = OCRTableService()
 

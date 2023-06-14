@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.example.camerakt.databinding.ListDialogBinding
@@ -35,7 +34,6 @@ class ListDialog(
             .setTitle("목록 수정")
             .setView(binding.root)
             .setPositiveButton("수정", DialogInterface.OnClickListener { dialog, _ ->
-                Log.d("수정 버튼1", "dialog : $dialog _ : 수정버튼 클릭 내용전달 x")
                 val modifiedRow = ArrayList<String>().apply {
 
                     add(binding.editCode.text.toString())
@@ -49,13 +47,11 @@ class ListDialog(
                     add(binding.editWon.text.toString())
                     add(binding.editExtra.text.toString())
                 }
-                Log.d("수정 버튼2", "수정 버튼2")
 
                 listViewModel.editRowData.value = Pair(modifiedRow, position)
             })
             .setNegativeButton("취소", null)
         return builder.create()
     }
-
-
+    
 }

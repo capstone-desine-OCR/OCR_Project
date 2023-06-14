@@ -14,22 +14,15 @@ import com.example.camerakt.repository.RepositoryImpl
 
 class ListViewModel : ViewModel() {
     var repository = RepositoryImpl
-
-    // 원래 private - getter로 전달해야하지만 ...
     val listBitMapLiveData: MutableLiveData<Bitmap> = MutableLiveData()
 
-    // fragment
     val listTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
     val listTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = listTableData
 
-    //
-    // 2가지 값을 한번에 묶어서 전달할 수 있음
     val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
 
-    // 촬영, ocr 인식 버튼 가시성에 사용
     val visibilityData: MutableLiveData<Pair<Boolean, Boolean>> = MutableLiveData()
 
-    // fragment에서 오류 인식 -> ListActivity로 돌아감
     fun handleRecognitionError(context: Context) {
         val fragmentManager = (context as AppCompatActivity).supportFragmentManager
         fragmentManager.beginTransaction()
@@ -86,16 +79,10 @@ class ListViewModel : ViewModel() {
                 }
             }
 
-
-
-            listTableData.value =
-                result  // ArrayList<ArrayList<String>>> MutableLiveData로 담아서 obsever가 인식할 수 있도록 view로 던짐
+            listTableData.value = result
+            // ArrayList<ArrayList<String>>> MutableLiveData로 담아서 obsever가 인식할 수 있도록 view로 던짐
         }
     }
 
 
-}
-
-interface AlertDialogListener {
-    fun showAlertDialog(title: String, message: String)
 }

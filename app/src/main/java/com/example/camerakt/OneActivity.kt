@@ -14,7 +14,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
-import androidx.lifecycle.ViewModelProvider
 import com.example.camerakt.databinding.ActivityOneBinding
 import com.example.camerakt.util.CameraUtil
 import com.example.camerakt.viewmodel.OneViewModel
@@ -44,26 +43,20 @@ class OneActivity : AppCompatActivity() {
         binding = ActivityOneBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ViewModelProvider(this).get(OneViewModel::class.java)
-
         // showCameraButton을 관찰하고 버튼 가시성 조정
-        viewModel.visibilityData.observe(this, { visibilityPair ->
+        oneViewModel.visibilityData.observe(this) { visibilityPair ->
             binding.btnCameraOne.visibility = if (visibilityPair.first) View.VISIBLE else View.GONE
             binding.btnOcrOne.visibility = if (visibilityPair.second) View.VISIBLE else View.GONE
-        })
+        }
 
         oneViewModel.oneBitMapLiveData.observe(this) // this : oneActivity
         { bitmap -> binding.oneImage.setImageBitmap(bitmap) }
 
-
-
-
         binding.btnCameraOne.setOnClickListener {
             // list_Activity 의 frameLayOut 의 fragment 위치를 찾는 것
-            //oneOcrFragment?.clearEditTextFields()
             val currentFragment =
                 supportFragmentManager.findFragmentById(R.id.fragment_container_one)
-            // fragment가 있다면..?
+
             if (currentFragment is OneOcrFragment) {
                 supportFragmentManager.beginTransaction()
                     .remove(currentFragment)
@@ -78,43 +71,31 @@ class OneActivity : AppCompatActivity() {
 
         binding.btnOcrOne.setOnClickListener {
 
-
-            //onClick(it)
             if (binding.oneImage.drawable != null) {
 
                 if (supportFragmentManager.findFragmentById(R.id.fragment_container_one) is OneOcrFragment) {
                     Toast.makeText(this, "인식 결과가 존재합니다. 재촬영 해주시길 바랍니다.", Toast.LENGTH_SHORT).show()
                 } else {
                     onClick(it)
-
-                    //fragment 생성 해서 activity 위에 붙여놓음
                     val fragment = OneOcrFragment()
-                    // fragment 해주는 역할
                     val transaction = supportFragmentManager.beginTransaction()
-                    //listActivity
                     transaction.replace(R.id.fragment_container_one, fragment)
                     transaction.commit()
 
                     // ocr인식 버튼 클릭 시 촬영, 인식 버튼 프래그먼트 화면에서 안보이게 설정
                     binding.btnCameraOne.visibility = View.GONE
                     binding.btnOcrOne.visibility = View.GONE
-
-
                 }
             } else {
                 Toast.makeText(this, "oneImage가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
                 Log.d("empty Image", "이미지 존재하지 않음")
             }
-
-
         }
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun onClick(v: View) {
-//        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
-
         when (v) {
             binding.btnOcrOne -> {
                 Toast.makeText(this, "One - clicked", Toast.LENGTH_SHORT).show()
@@ -135,15 +116,12 @@ class OneActivity : AppCompatActivity() {
                 } catch (ex: IOException) {
                     null
                 }
-                photoFile?.also { // null check 하려면 ? 을 써줘야 한다. -> ? 없을시 it null 인식해서 오류
+                photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                         this, "com.example.camerakt.fileprovider", it
                     )
 
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    // 사진 결과물을 다시 가져와야함
-                    // forResult : mainActivity -> serverActivity -> mainActivity 받게되는 결과값
-                    // 카메라 기본 앱도 Activity 형태라 찍은 사진 결과물을 result를 통해서 받는것
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE) // 21 이라 괜찮
 
                 }
@@ -152,7 +130,6 @@ class OneActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.d("CHECK1", "여기까지 전달이 되나?")
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val file = File(CameraUtil.curPhotoPath)
@@ -160,13 +137,8 @@ class OneActivity : AppCompatActivity() {
                 this.contentResolver,
                 Uri.fromFile(file)
             )
-            Log.d("CHECK2", "여기까지 전달이 되나?")
             val bitmap = ImageDecoder.decodeBitmap(decode)
-
-            Log.d("CHECK3", "여기까지 전달이 되나?")
-//            binding.oneImage.setImageBitmap(bitmap)
             oneViewModel.oneBitMapLiveData.value = bitmap
-            Log.d("CHECK4", "여기까지 전달이 되나?")
             CameraUtil.savePhoto(this, bitmap)
         }
     }

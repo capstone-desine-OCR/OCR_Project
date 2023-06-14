@@ -6,13 +6,11 @@ import android.graphics.Bitmap
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.camerakt.OneActivity
 import com.example.camerakt.R
 import com.example.camerakt.database.model.OCRTable
-import com.example.camerakt.database.service.OCRTableService
 import com.example.camerakt.repository.RepositoryImpl
 import com.example.camerakt.util.Variable
 
@@ -24,12 +22,6 @@ class OneViewModel : ViewModel() {
     var oneTableData = MutableLiveData<ArrayList<ArrayList<String>>>()
 
     val visibilityData: MutableLiveData<Pair<Boolean, Boolean>> = MutableLiveData()
-
-    val oneTableLiveData: LiveData<ArrayList<ArrayList<String>>> get() = oneTableData
-
-    val editRowData = MutableLiveData<Pair<ArrayList<String>, Int>>()
-
-    private val ocrTableService: OCRTableService = OCRTableService()
 
     //fragment에서 오류 인식 -> 오류 인식 -> oneActivity로 돌아감
     fun handleRecognitionError(context: Context) {
@@ -75,14 +67,6 @@ class OneViewModel : ViewModel() {
                 [[코드, BL-11], [원산지, 베트남], [품종, 고추], [수입날짜, 2023-06-15], [반입날짜, 2023-06-27],
                  [중량, 20], [수량, 345], [단가, $15], [금액, W230.68], [비고, 하자X]]*/
 
-            /* //error-1
-             if (it.size != 10) {
-                 Log.d("인식오류", "확인")
-                 handleRecognitionError(context)
-                 return@lineReturn // viewModel 종료
-             }
- */
-            //error-2
             try {
                 tmpList = recombineArrayList(it, context)
             } catch (e: IllegalStateException) {
@@ -99,22 +83,6 @@ class OneViewModel : ViewModel() {
             Log.d("oneList", oneList.toString())
 
             oneTableData.value = oneList
-
-            //            for (i in oneList.indices) {
-            //                if (i == 0) {
-            //                    Log.d("pass", ".") //index 0 : [번호, 코드 , 원산지, 품종, 수입날짜 ,...,비고]
-            //                } else {
-            //                    val currentList = oneList[i]
-            ////                    ocrTable.fromList(currentList)
-            ////                    ocrTableService.addProduct(ocrTable)
-            //                }
-            //            }
-
-            //            Log.d("products", ocrTableService.getAllProducts().toString())
-
-            //liveData_String.postValue(result)
-
-
         }
     }
 
@@ -136,36 +104,26 @@ class OneViewModel : ViewModel() {
                 if (j % 2 == 0) {
                     // 열 이름인 경우
                     name = currentRow[j]
-
                     // 열 이름이 "코드", "원산지", "품종"...중에 하나라도 해당하지 않는 경우, 즉 잘못된 템플릿을 인식 시킨 경우
-                    Log.d("name", name)
                     val recognitionError = nameCheck(name)
-                    if (recognitionError == false) {
+                    if (!recognitionError) {
                         productData.clear()
-                        //handleRecognitionError(context)
-                        Log.d("productdata", productData.toString())
-                        Log.d("error2", "체크 완료")
                         if (productData.isEmpty()) {
                             throw IllegalStateException("recognition error")
                         }
                     }
 
-                    Log.d("name", name)
                 } else {
                     // 열 값인 경우
                     value = currentRow[j]
-                    Log.d("value", value)
                     productData[name] = value
                 }
 
             }
         }
 
-        Log.d("productData", productData.toString())
-
         // productData = <원산지, 베트남>,<코드, BL-11>,<중량,20>,<수량,356>,,,
         // productData를 List [[코드,BL-11],[원산지, 베트남],[품종, 고추],[수입날짜, 2023-06-15],,,]로 변경
-
         val orderList: ArrayList<ArrayList<String>> = arrayListOf(
             arrayListOf("코드"),
             arrayListOf("원산지"),

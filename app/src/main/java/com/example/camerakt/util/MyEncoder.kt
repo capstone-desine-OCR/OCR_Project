@@ -5,7 +5,6 @@ import android.util.Base64
 import java.io.ByteArrayOutputStream
 
 class MyEncoder {
-    //encoding image
     fun getBitmap(bm: Bitmap): Bitmap {
         var bitmap: Bitmap = bm
         return bitmap
